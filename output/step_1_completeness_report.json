@@ -1,53 +1,60 @@
 {
     "global": {
-        "total_elements": 3922,
-        "elements_with_material": 3014,
-        "elements_without_material": 908,
-        "percentage_with_material": 76.85,
-        "percentage_without_material": 23.15
+        "total_elements": 3623,
+        "elements_with_material": 3164,
+        "elements_without_material": 459,
+        "percentage_with_material": 87.33,
+        "percentage_without_material": 12.67
     },
     "per_type": {
         "IfcWall": {
-            "total": 1367,
-            "with_material": 1354,
+            "total": 13,
+            "with_material": 0,
             "without_material": 13,
-            "percentage_with_material": 99.05,
-            "percentage_without_material": 0.95
+            "percentage_with_material": 0.0,
+            "percentage_without_material": 100.0
+        },
+        "IfcWallStandardCase": {
+            "total": 1354,
+            "with_material": 1354,
+            "without_material": 0,
+            "percentage_with_material": 100.0,
+            "percentage_without_material": 0.0
         },
         "IfcDoor": {
-            "total": 108,
-            "with_material": 108,
+            "total": 114,
+            "with_material": 114,
             "without_material": 0,
             "percentage_with_material": 100.0,
             "percentage_without_material": 0.0
         },
         "IfcWindow": {
-            "total": 441,
-            "with_material": 441,
+            "total": 178,
+            "with_material": 178,
             "without_material": 0,
             "percentage_with_material": 100.0,
             "percentage_without_material": 0.0
         },
         "IfcBeam": {
             "total": 37,
-            "with_material": 0,
-            "without_material": 37,
-            "percentage_with_material": 0.0,
-            "percentage_without_material": 100.0
+            "with_material": 37,
+            "without_material": 0,
+            "percentage_with_material": 100.0,
+            "percentage_without_material": 0.0
         },
         "IfcSlab": {
-            "total": 371,
+            "total": 377,
             "with_material": 127,
-            "without_material": 244,
-            "percentage_with_material": 34.23,
-            "percentage_without_material": 65.77
+            "without_material": 250,
+            "percentage_with_material": 33.69,
+            "percentage_without_material": 66.31
         },
         "IfcMember": {
             "total": 418,
-            "with_material": 0,
-            "without_material": 418,
-            "percentage_with_material": 0.0,
-            "percentage_without_material": 100.0
+            "with_material": 418,
+            "without_material": 0,
+            "percentage_with_material": 100.0,
+            "percentage_without_material": 0.0
         },
         "IfcCurtainWall": {
             "total": 73,
@@ -73,20 +80,6 @@
         "IfcCovering": {
             "total": 28,
             "with_material": 28,
-            "without_material": 0,
-            "percentage_with_material": 100.0,
-            "percentage_without_material": 0.0
-        },
-        "IfcDuctSegment": {
-            "total": 12,
-            "with_material": 12,
-            "without_material": 0,
-            "percentage_with_material": 100.0,
-            "percentage_without_material": 0.0
-        },
-        "IfcPipeSegment": {
-            "total": 36,
-            "with_material": 36,
             "without_material": 0,
             "percentage_with_material": 100.0,
             "percentage_without_material": 0.0
