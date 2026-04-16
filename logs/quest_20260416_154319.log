@@ -1,0 +1,50 @@
+2026-04-16 15:45:32,336 - core.step_1_element_collector - INFO - 
+============================================================
+2026-04-16 15:45:32,336 - core.step_1_element_collector - INFO - STAP 1: ALLE BOUWKUNDIGE ELEMENTEN VERZAMELEN
+2026-04-16 15:45:32,337 - core.step_1_element_collector - INFO - ============================================================
+
+2026-04-16 15:45:32,338 - core.element_extractor - INFO - ============================================================
+2026-04-16 15:45:32,339 - core.element_extractor - INFO - STAP 1: Bouwkundige elementen verzamelen
+2026-04-16 15:45:32,339 - core.element_extractor - INFO - ============================================================
+2026-04-16 15:45:32,339 - core.element_extractor - INFO - Stap 1.1: Parent-relatie map opbouwen...
+2026-04-16 15:45:32,385 - core.element_extractor - INFO - Stap 1.2: Alle bouwkundige elementen ophalen...
+2026-04-16 15:46:03,428 - core.element_extractor - INFO - Stap 1.3: Resultaten omzetten naar DataFrame...
+2026-04-16 15:46:03,459 - core.element_extractor - INFO - ============================================================
+2026-04-16 15:46:03,465 - core.completeness_reporter - INFO - Genereer volledigheidsrapport...
+2026-04-16 15:46:03,504 - core.completeness_reporter - INFO - Rapport opgeslagen: C:\Users\cathy\Downloads\quest\output\step_1_completeness_report.json
+2026-04-16 15:46:03,507 - core.completeness_reporter - INFO - ============================================================
+2026-04-16 15:46:03,507 - core.completeness_reporter - INFO - VOLLEDIGHEIDSRAPPORT - GLOBAAL
+2026-04-16 15:46:03,507 - core.completeness_reporter - INFO - ============================================================
+2026-04-16 15:46:03,507 - core.completeness_reporter - INFO - Totaal elementen: 3922
+2026-04-16 15:46:03,510 - core.completeness_reporter - INFO - ============================================================
+2026-04-16 15:46:03,510 - core.completeness_reporter - INFO - VOLLEDIGHEIDSRAPPORT - PER ELEMENT-TYPE
+2026-04-16 15:46:03,511 - core.completeness_reporter - INFO - ============================================================
+2026-04-16 15:46:03,511 - core.completeness_reporter - INFO - 
+IfcWall:
+2026-04-16 15:46:03,515 - core.completeness_reporter - INFO - 
+IfcDoor:
+2026-04-16 15:46:03,521 - core.completeness_reporter - INFO - 
+IfcWindow:
+2026-04-16 15:46:03,530 - core.completeness_reporter - INFO - 
+IfcBeam:
+2026-04-16 15:46:03,535 - core.completeness_reporter - INFO - 
+IfcSlab:
+2026-04-16 15:46:03,540 - core.completeness_reporter - INFO - 
+IfcMember:
+2026-04-16 15:46:03,545 - core.completeness_reporter - INFO - 
+IfcCurtainWall:
+2026-04-16 15:46:03,548 - core.completeness_reporter - INFO - 
+IfcRoof:
+2026-04-16 15:46:03,552 - core.completeness_reporter - INFO - 
+IfcBuildingElementProxy:
+2026-04-16 15:46:03,558 - core.completeness_reporter - INFO - 
+IfcCovering:
+2026-04-16 15:46:03,562 - core.completeness_reporter - INFO - 
+IfcDuctSegment:
+2026-04-16 15:46:03,566 - core.completeness_reporter - INFO - 
+IfcPipeSegment:
+2026-04-16 15:46:03,570 - core.completeness_reporter - INFO - 
+IfcRailing:
+2026-04-16 15:46:03,573 - core.step_1_element_collector - INFO - Sla tussentijdse resultaten op...
+2026-04-16 15:46:03,586 - core.step_1_element_collector - ERROR - Fout bij opslaan DataFrame: cannot pickle 'SwigPyObject' object
+2026-04-16 15:46:03,586 - core.step_1_element_collector - ERROR - Fout in Stap 1: cannot pickle 'SwigPyObject' object

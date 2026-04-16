@@ -31,3 +31,21 @@
 2026-04-16 15:34:03,260 - __main__ - INFO - ============================================================
 
 2026-04-16 15:36:01,061 - __main__ - ERROR - Kritieke fout: type object 'IFCVersion' has no attribute 'IFC_4_2'
+2026-04-16 15:43:04,015 - __main__ - ERROR - Geen IFC-bestandspad opgegeven!
+2026-04-16 15:43:04,015 - __main__ - INFO - Gebruik: python main.py <C:\Users\cathy\Downloads\quest\4.3_bestand.ifc>
+2026-04-16 15:43:19,050 - __main__ - INFO - QUEST - BIM MATERIAALPROFILER
+2026-04-16 15:43:19,052 - __main__ - INFO - 
+============================================================
+2026-04-16 15:43:19,052 - __main__ - INFO - STAP 0: IFC-BESTAND INLADEN EN VERSIE DETECTEREN
+2026-04-16 15:43:19,052 - __main__ - INFO - ============================================================
+
+2026-04-16 15:45:32,334 - __main__ - INFO - ============================================================
+2026-04-16 15:45:32,334 - __main__ - INFO - STAP 0 - RESULTATEN
+2026-04-16 15:45:32,334 - __main__ - INFO - ============================================================
+2026-04-16 15:45:32,334 - __main__ - INFO - Bestand: C:\Users\cathy\Downloads\quest\4.3_bestand.ifc
+2026-04-16 15:45:32,335 - __main__ - INFO - Bestandsgrootte: 989.05 MB
+2026-04-16 15:45:32,335 - __main__ - INFO - Gedetecteerde versie: 4.3
+2026-04-16 15:45:32,335 - __main__ - INFO - Aantal bouwkundige elementen-typen: 10
+2026-04-16 15:45:32,335 - __main__ - INFO - ============================================================
+
+2026-04-16 15:46:03,586 - __main__ - ERROR - Kritieke fout: cannot pickle 'SwigPyObject' object
