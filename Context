@@ -1,0 +1,271 @@
+Context: 
+
+Eerst volgt een korte inleiding over de aannames die gedaan worden in het project, hierna ga ik je een instructie geven over het maken van een routine die automatisch werkt (deze zal je zelf aanvullen). Ik wil dat je op basis van deze prompt mij een uitgebreide planning opstelt over de te nemen stappen. Ga erbij het ontwerp van uit dat je de applicatie netjes opbouwt, dat wil zeggen, gebruik maakt van meerdere python modulen die elkaar kunnen aanroepen zodat we straks de code goed kunnen beheren 
+
+Het doel van dit project is het ontwikkelen van een geautomatiseerde methode (beroepsproduct) die betrouwbare materiaalgegevens uit BIM-modellen extraheert. Aan de hand van ifc modellen 2.3 en 4.3 en wat ertussen zit. Met behulp van BIM-modellen maken we de logistieke materiaalstromen en de circulaire potentie van gebouwen inzichtelijk. De output moet de vorm hebben van een Excel bestand waarin alle materialen in de volgende categorieën zijn gestopt: Staal, Bitumen, Aluminium, Keramiek, Koper, Hout, Beton, Gips en Glas. Met de daarbij horende volumes opgeteld zodat elke categorie een totaal volume krijgt.  
+
+
+De aannames die we gedaan hebben:  
+
+Een eerste aanname: De objectstructuur van het model overeenkomt met de fysieke opbouw van het gebouw. Dit betekent dat bouwonderdelen zoals wanden, vloeren en kolommen correct gemodelleerd zijn en dat de geometrie van deze elementen de werkelijkheid benadert. 
+
+Een tweede aanname: De aanwezigheid van materiaalinformatie. Voor het genereren van een dataset wordt ervan uitgegaan dat materialen gekoppeld zijn aan de objecten in het model. Wanneer materiaalinformatie ontbreekt of onvolledig is ingevuld kan dit invloed hebben op de betrouwbaarheid van de dataset. 
+
+Een derde aanname: Deze aanname kan gemaakt worden op basis van het detailniveau van de BIM-modellen. Sommige modellen bevatten uitgebreide materiaalinformatie, terwijl andere modellen minder informatie bevatten. Hierdoor kan de hoeveelheid bruikbare data variëren. Dit heeft ermee te maken dat verschillende architecten/aannemers/installatieadviseurs op andere wijzen hun modellen opbouwen, er is geen standaard maatstaf. 
+
+Ook al hebben we deze aannames gedaan moet er een zo nauwkeurig mogelijk script gegenereerd worden. Het script zal gemaakt worden in verschillende fases  
+
+Fase 1 analyseer materialen verkregen ifc 
+
+Fase 2 materiaal met vernoemde volumes extraheren  
+
+Fase 3 categoriseren materialen 
+
+Fase 4 exporten van materiaal met behorende data naar andere vorm  
+
+ 
+Fase 1: Analyseer materialen uit IFC 
+
+Doel: Het IFC-bestand inladen en een volledig beeld krijgen van alle aanwezige materiaalinformatie voordat er iets wordt geëxtraheerd. 
+
+Dit is een idee van wat er in deze fase gedaan moet worden.  
+
+Inladen van het IFC-bestand via ifcopenshell en controleren of het bestand geldig is 
+
+Detecteren welke IFC-versie het bestand heeft zodat het script zich hierop aanpast 
+
+Inventariseren welke bouwkundige elementen aanwezig zijn zoals wanden, vloeren, kolommen, daken en balken 
+
+Per element controleren of er materiaalinformatie aan gekoppeld is. 
+
+Loggen welke elementen geen materiaalinformatie hebben zodat dit inzichtelijk is in de output 
+
+Rapportage genereren van de volledigheid van het model: hoeveel procent van de elementen heeft materiaaldata 
+
+Python module: ifc_analyser.py 
+
+
+Fase 2: Materiaal met bijbehorende volumes extraheren 
+
+Doel: Per element het materiaal én het bijbehorende volume berekenen en opslaan. 
+
+Dit is een idee van wat er in deze fase gedaan moet worden. 
+
+Per bouwkundig element de geometrie ophalen via ifcopenshell.geom 
+
+Volume berekenen op basis van de geometrie van het element, rekening houdend met laagopbouw bij samengestelde elementen 
+
+Bij IfcMaterialLayerSet het volume per laag berekenen op basis van de laagdikte en het oppervlak van het element 
+
+Omgaan met ontbrekende geometrie: als een element geen volume heeft wordt dit gelogd en overgeslagen 
+
+Alle resultaten opslaan als gestructureerde data per element met velden zoals element-ID, type, materiaalnaam en volume in m³ 
+
+Tussentijdse validatie uitvoeren om te controleren of volumes realistisch zijn 
+
+Python module: volume_extractor.py 
+
+
+Fase 3: Categoriseren van materialen 
+
+Doel: Alle gevonden materiaalnamen koppelen aan de negen vaste categorieën en de volumes optellen per categorie. 
+
+Dit is een idee van wat er in deze fase gedaan moet worden. 
+
+Een mapping opbouwen van materiaalnamen naar categorieën: Staal, Bitumen, Aluminium, Keramiek, Koper, Hout, Beton, Gips en Glas 
+
+De mapping werkt op basis van trefwoorden zodat bijvoorbeeld "gewapend beton", "prefab beton" en "in-situ beton" allemaal onder Beton vallen 
+
+Omgaan met variaties in spelling, taal (Nederlands/Engels) en afkortingen via een uitgebreide trefwoordenlijst 
+
+Materialen die niet herkend worden apart opslaan in een categorie "Onbekend" zodat deze handmatig beoordeeld kunnen worden 
+
+Per categorie de volumes van alle bijbehorende elementen optellen tot een totaalvolume 
+
+Logging van welke materiaalnamen niet gematcht konden worden zodat de mapping later uitgebreid kan worden 
+
+Python module: material_categoriser.py 
+
+
+Fase 4: Exporteren naar Excel 
+
+Doel: De gecategoriseerde materiaaldata overzichtelijk exporteren naar een Excel-bestand met meerdere tabbladen. 
+
+Dit is een idee van wat er in deze fase gedaan moet worden. 
+
+Hoofdtabblad aanmaken met per categorie het totaalvolume in m³ 
+
+Detailtabblad aanmaken met alle individuele elementen, hun materiaalnaam, categorie en volume 
+
+Tabblad aanmaken voor onbekende materialen zodat deze handmatig kunnen worden ingedeeld 
+
+Tabblad aanmaken voor de volledigheidsrapportage uit Fase 1 
+
+Opmaak toevoegen via openpyxl: kopteksten, kleurcodering per categorie en automatische kolombreedtes 
+
+Het Excel-bestand opslaan met een automatische bestandsnaam op basis van het IFC-bestand en de datum 
+
+Python module: excel_exporter.py 
+
+Dit is een vorm van hoe de fases op gebouwd kunnen worden bekijk zelf of dit een logische opbouw is van de fases. Als je dingen aanpast in het proces zet dit dan in een los .md bestand met onderbouwing waarom.  
+
+
+De onderstaande stappen zijn suggesties voor de aanpak van het schrijven. 
+
+Stap 0 — Bestand inlezen en versie herkennen Open het IFC-bestand en lees automatisch uit welke versie het bestand heeft. Gebruik deze versie als basis voor alle vervolgstappen, zodat de applicatie zich aanpast aan het bestandstype zonder aannames te doen. 
+
+Stap 1 — Alle bouwkundige elementen verzamelen Haal alle fysieke bouwonderdelen op uit het bestand, zoals wanden, vloeren, kolommen en balken. Sla per onderdeel de unieke identificatie, de naam en het type op. 
+
+Stap 2 — Materiaalkoppelingen ophalen Zoek per bouwonderdeel alle gekoppelde materiaalinformatie op via de relaties die in het bestand zijn vastgelegd. 
+
+Stap 3 — Materiaaltype verwerken Bepaal per koppeling welk type materiaalinformatie aanwezig is en verwerk elk type op de juiste manier. Denk aan enkelvoudige materialen, lijsten van materialen, gelaagde opbouw met diktes, profielgebonden materialen en samengestelde materialen met fracties. Zorg dat onbekende typen worden gelogd zonder dat de applicatie crasht. 
+
+Stap 4 — Versieverschillen correct afhandelen Pas de verwerking aan op basis van de bestandsversie die in stap 0 is uitgelezen. Sommige materiaaltypen bestaan alleen in nieuwere versies en andere zijn anders genest in oudere versies. Gebruik geen foutafhandeling als vervanging voor versiekennis. 
+
+Stap 5 — Hoeveelheden uitlezen Lees per bouwonderdeel de aanwezige hoeveelheden uit zoals volumes en oppervlakken. Sla alleen waarden op die daadwerkelijk aanwezig zijn in het bestand. Gebruik nooit een standaardwaarde als vervanging voor ontbrekende data, sla dit op als leeg. 
+
+Stap 6 — Aanvullende eigenschappen ophalen Haal per bouwonderdeel aanvullende eigenschappen op zoals dichtheid en andere materiaalgerelateerde kenmerken. Vul nooit een standaardwaarde in als een eigenschap ontbreekt. 
+
+Stap 7 — Materiaallijst samenvoegen en aggregeren Groepeer alle gevonden materialen op naam en type. Tel de hoeveelheden per groep op en bewaar hoeveel elementen per combinatie aanwezig zijn. Zorg dat elk element herleidbaar blijft via zijn unieke identificatie. 
+
+Stap 8 — Exporteren Exporteer de resultaten naar Excel met de volgende indeling: een overzichtstabblad met totaalvolumes per materiaalcategorie, een detailtabblad met één regel per element inclusief unieke identificatie voor kwaliteitscontrole, een tabblad voor niet-herkende materialen, en een tabblad met de volledigheidsrapportage. Voeg altijd een kolom toe met de bestandsversie zodat de herkomst traceerbaar blijft.  
+
+
+Hieronder staan IFC-entiteiten gebruik deze voor het uitvoeren van de stappen maar gebruik niet alleen deze entiteiten doe zelf ook nog onderzoek naar entiteiten die iets kunnen toevoegen. 
+
+Gebouw-elementen: 
+
+IFCWALL (een wand of muur in een gebouw, kan eigenschappen, geometrie en locatie hebben) 
+
+IFCDOOR (een deur in een muur of structuur, wordt vaak gekoppeld aan IFCWALL en heeft geometrie en eigenschappen zoals type en afmetingen) 
+
+IFCWINDOW (een raam in een wand, wordt geplaatst in muren en kan referenties hebben naar geometrie en materialen) 
+
+IFCBEAM (een dragende balk, vaak onderdeel van een structureel frame, met materiaal- en geometrie-informatie) 
+
+IFCCOLUMN (een kolom, verticale dragende structuur, met geometrie, plaatsing en materiaal) 
+
+IFCSLAB (een vloer- of daklaag, met dikte, geometrie en materiaal) 
+
+IFCMEMBER (een algemeen constructie-element (bijv. onderdeel van een frame), vaak gebruikt als het geen specifieke balk/kolom is.) 
+
+IFCCURTAINWALL (een gevelsysteem (bijv. glazen gevel), opgebouwd uit meerdere onderdelen zoals panelen en frames.) 
+
+IFCROOF (Een dakconstructie, kan verschillende vormen hebben (plat, hellend) en bestaat vaak uit meerdere lagen. 
+
+IFCLIGHTFIXTURE (een verlichtingsarmatuur) 
+
+IFCBUILDINGELEMENTPROXY (een “onbekend” of algemeen bouwobject dus een object waarvan het type niet goed is gespecificeerd) 
+
+“TYPE” Dit zijn geen fysieke objecten, maar “blauwdrukken” van objecten deze bevatten vaak: standaard eigenschappen en materiaal info. 
+
+IFCWALLTYPE (Beschrijft een type muur, inclusief standaard eigenschappen en materialen voor meerdere muren.) 
+
+IFCWINDOWTYPE (Type raam, met standaard afmetingen, materiaal en eigenschappen.) 
+
+IFCDOORTYPE (Type deur, met vaste eigenschappen zoals afmetingen en materiaal.) 
+
+IFCMEMBERTYPE (Type constructie-element (member), met gedeelde eigenschappen.)  
+
+IFCBUILDINGELEMENTPROXYTYPE (type voor algemene of onbekende elementen (proxy’s).) 
+
+“Properties” (speciale component-info) Dit zijn geen objecten, maar extra informatie over onderdelen 
+
+IFCWINDOWLININGPROPERTIES (Beschrijft het kozijn van een raam, zoals dikte, diepte en materiaal.)  
+
+IFCDOORLININGPROPERTIES (Beschrijft het kozijn van een deur (de omlijsting waarin de deur zit.) 
+
+IFCDOORPANELPROPERTIES (Beschrijft het deurblad zelf, zoals afmetingen, type en materiaal. 
+
+
+Geometrie: 
+
+IFCSHAPEREPRESENTATION (een representatie van de vorm van een object, bijvoorbeeld een 3D solid of 2D plan) 
+
+IFCEXTRUDEDAREASOLID (een 3D-vorm die ontstaat door een profiel langs een vector uit te rekken, vaak gebruikt voor muren, balken, kolommen) 
+
+IFCFACETEDBREP (Een 3D solid in facetten (polygonen), wordt gebruikt voor complexe vormen of geïmporteerde geometrie) 
+
+IFCPRODUCTDEFINITIONSHAPE (container die één of meerdere geometrie-representaties van een product bevat) 
+
+IFCMAPPEDITEM (zelfde geometrie op meerdere objecten toegepast, zodat identieke objecten niet opnieuw volledig worden gedefinieerd) 
+
+IFCPOLYLINE (een aaneenschakeling van rechte lijnsegmenten in 2D of 3D, bestaat uit een lijst van IFCCARESIANPOINT-entiteiten) 
+
+IFCCOMPOSITECURVESEGMENT (verbindt meerdere geometrische segmenten tot één samengestelde curve) 
+
+IFCCIRCLE (wordt gebruikt om ronde geometrie te maken) 
+
+IFCPOLYLOOP (een lijst van punten die samen een gesloten vorm maken) 
+
+IFCFACEOUTERBOUND (de buitenrand van een vlak, bijv. de buitenste rand van die vloer = dit element) 
+
+IFCFACE  (een vlak -> stuk vloer, muur, dakvlak gewoon een plat oppervlak in 3D) 
+
+IFCCARTESIANPOINT  (een punt met coördinaten, bijv. (0, 0, 0), (5, 2, 3). Dat zijn gewoon plekjes in 3D) 
+
+IFCDIRECTION (een richting in de ruimte bijv. omhoog, naar links maar dan in cijfers, zoals: (1, 0, 0) → naar rechts (0, 0, 1) → omhoog) 
+
+IFCCLOSEDSHELL  (een volledig gesloten 3D-vorm) 
+
+IFCTRIMMEDCURVE (een stukje van een lijn of curve, dus: je neemt een lijn (bijv. een cirkel of boog, en knipt daar een stuk uit 
+
+IFCRECTANGLEPROFILEDEF (een rechthoekige vorm (2D profiel) 
+
+IFCGEOMETRICCURVESET (een verzameling van lijnen en curves) 
+
+IFCARBITRARYPROFILEDEFWITHVOIDS (een willekeurige vorm met gaten erin (2D profiel) dus geen standaard vorm (zoals rechthoek of cirkel) én er zitten openingen in) 
+
+ 
+Locatie / plaatsing: 
+
+IFCAXIS2PLACEMENT3D (coördinatenstelsel met oorsprong en oriëntatie voor 3D-locatie. Vaak gebruikt binnen IFCLOCALPLACEMENT) 
+
+IFCCARTESIANPOINT (een punt in 2D of 3D coördinatenruimte. Basis voor alle geometrische definities en plaatsing) 
+
+IFCDIRECTION (een richting in de ruimte bijv. omhoog, naar links maar dan in cijfers, zoals: (1, 0, 0) → naar rechts (0, 0, 1) → omhoog) 
+
+ 
+Eigenschappen: 
+
+IFCPROPERTYSET (een set van eigenschappen die aan een object zijn gekoppeld) 
+
+IFCPROPERTYSINGLEVALUE (één waarde van een eigenschap, bv hoogte = 3 m) 
+
+IFCMATERIALCONSTITUENT (onderdeel van een samengesteld materiaal) 
+
+IFCMATERIAL (het echte materiaal, zoals beton, staal of glas) 
+
+IFCMATERIALLAYER (een laag van het object, bv 20 cm beton + 2 cm pleister) 
+
+IFCMATERIALLAYERSET (set van lagen die samen een object beschrijven) 
+
+IFCSTYLEDITEM (hoe een object eruitziet qua uiterlijk, kleur, transparantie, textuur) 
+
+IFCMATERIALCONSTITUENTSET (een set van materialen die samen één object vormen) 
+
+ 
+Relaties (koppelingen tussen objecten): 
+
+IFCRELDEFINESBYPROPERTIES (koppelt een object aan één of meerdere property sets) 
+
+IFCRELCONTAINEDINSPATIALSTRUCTURE (plaats een object in de gebouwhiërarchie, bv een muur in een verdieping) 
+
+IFCRELAGGREGATES (decompositie van objecten, bv een gebouw dat uit verdiepingen bestaat) 
+
+IFCRELASSOCIATESMATERIAL (koppelt een object aan een materiaal) 
+
+IFCRELDEFINESBYTYPE = koppelt een object aan een type deze deuren horen bij type X 
+
+
+Project- en gebouwstructuur: 
+
+IFCPROJECT (het overkoepelende project) 
+
+IFCSITE (de locatie of site van het project) 
+
+IFCBUILDING (het gebouw binnen het project) 
+
+IFCBUILDINGSTOREY (een verdieping binnen het gebouw) 
+
+ 
