@@ -1,0 +1,3 @@
+2026-04-16 11:39:38,283 - core.ifc_loader - INFO - Valideer IFC-bestand: c:\Users\cathy\Downloads\quest\4.3_bestand.ifc
+2026-04-16 11:41:54,373 - core.version_detector - INFO - Start IFC-versie detectie...
+2026-04-16 11:41:54,377 - core.version_strategies - INFO - IFC 4.3 strategie geladen

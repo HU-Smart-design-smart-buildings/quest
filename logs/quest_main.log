@@ -1,0 +1,12 @@
+2026-04-16 11:39:38,282 - __main__ - INFO - ============================================================
+2026-04-16 11:39:38,282 - __main__ - INFO - STAP 0: IFC-bestand inladen en versie detecteren
+2026-04-16 11:39:38,282 - __main__ - INFO - ============================================================
+2026-04-16 11:41:54,377 - __main__ - INFO - ============================================================
+2026-04-16 11:41:54,378 - __main__ - INFO - STAP 0 - RESULTATEN
+2026-04-16 11:41:54,378 - __main__ - INFO - ============================================================
+2026-04-16 11:41:54,378 - __main__ - INFO - Bestand: c:/Users/cathy/Downloads/quest/4.3_bestand.ifc
+2026-04-16 11:41:54,378 - __main__ - INFO - Bestandsgrootte: 989.05 MB
+2026-04-16 11:41:54,378 - __main__ - INFO - Gedetecteerde versie: 4.3
+2026-04-16 11:41:54,379 - __main__ - INFO - Aantal bouwkundige elementen om te verwerken: 10
+2026-04-16 11:41:54,379 - __main__ - INFO - Bouwkundige elementen: IFCWALL, IFCDOOR, IFCWINDOW, IFCBEAM, IFCCOLUMN, IFCSLAB, IFCMEMBER, IFCCURTAINWALL, IFCROOF, IFCBUILDINGELEMENTPROXY
+2026-04-16 11:41:54,379 - __main__ - INFO - ============================================================

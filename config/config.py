@@ -26,28 +26,12 @@ IFC_VERSION_MAP = {
     "4.3": IFCVersion.IFC_4_3,
 }
 
-# Bouwkundige elementen per versie
-BUILDING_ELEMENTS = {
-    IFCVersion.IFC_2_3: [
-        "IFCWALL", "IFCDOOR", "IFCWINDOW", "IFCBEAM", 
-        "IFCCOLUMN", "IFCSLAB", "IFCMEMBER", "IFCROOF"
-    ],
-    IFCVersion.IFC_4_0: [
-        "IFCWALL", "IFCDOOR", "IFCWINDOW", "IFCBEAM", 
-        "IFCCOLUMN", "IFCSLAB", "IFCMEMBER", "IFCCURTAINWALL", 
-        "IFCROOF", "IFCBUILDINGELEMENTPROXY"
-    ],
-    IFCVersion.IFC_4_1: [
-        "IFCWALL", "IFCDOOR", "IFCWINDOW", "IFCBEAM", 
-        "IFCCOLUMN", "IFCSLAB", "IFCMEMBER", "IFCCURTAINWALL", 
-        "IFCROOF", "IFCBUILDINGELEMENTPROXY"
-    ],
-    IFCVersion.IFC_4_3: [
-        "IFCWALL", "IFCDOOR", "IFCWINDOW", "IFCBEAM", 
-        "IFCCOLUMN", "IFCSLAB", "IFCMEMBER", "IFCCURTAINWALL", 
-        "IFCROOF", "IFCBUILDINGELEMENTPROXY"
-    ],
-}
+# Alle bouwkundige elementen die we willen verwerken (uniform voor alle versies)
+UNIVERSAL_BUILDING_ELEMENTS = [
+    "IFCWALL", "IFCDOOR", "IFCWINDOW", "IFCBEAM", 
+    "IFCCOLUMN", "IFCSLAB", "IFCMEMBER", "IFCCURTAINWALL", 
+    "IFCROOF", "IFCBUILDINGELEMENTPROXY"
+]
 
 # Logging configuratie
 LOG_FORMAT = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"

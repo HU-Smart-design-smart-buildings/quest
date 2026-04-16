@@ -70,7 +70,7 @@ if __name__ == "__main__":
         ifc_path = sys.argv[1]
     else:
         # Standaard test-pad (aanpassen naar jouw bestand)
-        ifc_path = "c:/Users/cathy/Downloads/quest/test_models/example.ifc"
+        ifc_path = "c:/Users/cathy/Downloads/quest/4.3_bestand.ifc"
     
     results = execute_step_0(ifc_path)
     

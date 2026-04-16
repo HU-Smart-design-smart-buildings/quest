@@ -3,6 +3,13 @@ from core.logger import setup_logger
 
 logger = setup_logger(__name__)
 
+# Alle bouwkundige elementen die we willen verwerken (uniform voor alle versies)
+UNIVERSAL_BUILDING_ELEMENTS = [
+    "IFCWALL", "IFCDOOR", "IFCWINDOW", "IFCBEAM", 
+    "IFCCOLUMN", "IFCSLAB", "IFCMEMBER", "IFCCURTAINWALL", 
+    "IFCROOF", "IFCBUILDINGELEMENTPROXY"
+]
+
 class VersionStrategy:
     """
     Base class voor versiespecifieke extractielogica.
@@ -13,8 +20,8 @@ class VersionStrategy:
         self.ifc_version = ifc_version
     
     def get_building_elements(self):
-        """Retourneer lijst van bouwkundige elementen voor deze versie."""
-        raise NotImplementedError
+        """Retourneer uniform lijst van bouwkundige elementen voor ALLE versies."""
+        return UNIVERSAL_BUILDING_ELEMENTS
     
     def extract_material_info(self, element):
         """Versiespecifieke materiaal-extractie."""
@@ -29,8 +36,8 @@ class IFC23Strategy(VersionStrategy):
         logger.info("IFC 2.3 strategie geladen")
     
     def get_building_elements(self):
-        return ["IFCWALL", "IFCDOOR", "IFCWINDOW", "IFCBEAM", 
-                "IFCCOLUMN", "IFCSLAB", "IFCMEMBER", "IFCROOF"]
+        """Retourneer dezelfde elementen als andere versies."""
+        return UNIVERSAL_BUILDING_ELEMENTS
     
     def extract_material_info(self, element):
         """IFC 2.3 materialenextractie - eenvoudiger dan 4.x"""
@@ -46,8 +53,8 @@ class IFC40Strategy(VersionStrategy):
         logger.info("IFC 4.0 strategie geladen")
     
     def get_building_elements(self):
-        from config.config import BUILDING_ELEMENTS
-        return BUILDING_ELEMENTS[IFCVersion.IFC_4_0]
+        """Retourneer dezelfde elementen als andere versies."""
+        return UNIVERSAL_BUILDING_ELEMENTS
     
     def extract_material_info(self, element):
         """IFC 4.0 materialenextractie"""
@@ -62,8 +69,8 @@ class IFC41Strategy(VersionStrategy):
         logger.info("IFC 4.1 strategie geladen")
     
     def get_building_elements(self):
-        from config.config import BUILDING_ELEMENTS
-        return BUILDING_ELEMENTS[IFCVersion.IFC_4_1]
+        """Retourneer dezelfde elementen als andere versies."""
+        return UNIVERSAL_BUILDING_ELEMENTS
     
     def extract_material_info(self, element):
         """IFC 4.1 materialenextractie"""
@@ -78,8 +85,8 @@ class IFC43Strategy(VersionStrategy):
         logger.info("IFC 4.3 strategie geladen")
     
     def get_building_elements(self):
-        from config.config import BUILDING_ELEMENTS
-        return BUILDING_ELEMENTS[IFCVersion.IFC_4_3]
+        """Retourneer dezelfde elementen als andere versies."""
+        return UNIVERSAL_BUILDING_ELEMENTS
     
     def extract_material_info(self, element):
         """IFC 4.3 materialenextractie - meest uitgebreid"""
