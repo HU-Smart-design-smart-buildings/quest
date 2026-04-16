@@ -45,14 +45,6 @@ class VersionDetector:
             logger.info(f"✓ IFC-versie gedetecteerd (via header): {self.detected_version}")
             return self.detected_version, self.version_enum
         
-        # Methode 3: Fallback - inspecteer aanwezige entiteiten
-        version_via_entities = self._detect_via_entities()
-        if version_via_entities:
-            logger.warning(f"⚠ IFC-versie geschat op basis van entiteiten: {version_via_entities}")
-            self.detected_version = version_via_entities
-            self.version_enum = IFC_VERSION_MAP.get(version_via_entities, IFCVersion.IFC_4_0)
-            return self.detected_version, self.version_enum
-        
         logger.error("✗ Kon IFC-versie niet detecteren - standaard op 4.0")
         self.detected_version = "4.0"
         self.version_enum = IFCVersion.IFC_4_0
