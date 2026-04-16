@@ -65,6 +65,7 @@ class VersionDetector:
                 "IFC2X3": "2.3",
                 "IFC4": "4.0",
                 "IFC4X1": "4.1",
+                "IFC4X2": "4.2",
                 "IFC4X3": "4.3",
             }
             return version_map.get(schema)
@@ -94,6 +95,8 @@ class VersionDetector:
                     elif "4" in schema_str:
                         if "3" in schema_str:
                             return "4.3"
+                        elif "2" in schema_str:
+                            return "4.2"
                         elif "1" in schema_str:
                             return "4.1"
                         else:
@@ -102,29 +105,6 @@ class VersionDetector:
             logger.debug(f"Header detectie mislukt: {e}")
         
         return None
-    
-    def _detect_via_entities(self):
-        """
-        Schat versie op basis van aanwezige entiteiten.
-        IFC 4.x heeft meer entiteiten dan 2.3.
-        
-        Returns:
-            str met versie of None
-        """
-        try:
-            all_entities = self.ifc_file.wrapped_data.entity_names() if hasattr(self.ifc_file.wrapped_data, 'entity_names') else []
-            entity_count = len(all_entities)
-            
-            # IFC 2.3 heeft ongeveer 200-250 entiteiten
-            # IFC 4.0/4.1/4.3 hebben meer (300+)
-            if entity_count < 280:
-                return "2.3"
-            else:
-                # Voor 4.0, 4.1, 4.3 verschil: 4.3 heeft MOSTENTITEITEN
-                return "4.0"  # Default fallback
-        except Exception as e:
-            logger.debug(f"Entity-based detectie mislukt: {e}")
-            return None
     
     def get_detected_version(self):
         """Retourneer gedetecteerde versie."""
