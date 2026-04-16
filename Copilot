@@ -1,0 +1,14 @@
+c:\Users\cathy\Downloads\quest\
+├── main.py                          # Entry point
+├── config/
+│   └── config.py                    # Configuratie (paden, versies, logging)
+├── core/
+│   ├── __init__.py
+│   ├── ifc_loader.py               # IFC-bestand inladen & validatie
+│   ├── version_detector.py         # IFC-versie detectie
+│   ├── version_strategies.py       # Versiespecifieke logica
+│   └── logger.py                   # Logging-systeem
+├── output/
+│   └── (Excel-bestanden komen hier)
+└── logs/
+    └── (Log-bestanden)
