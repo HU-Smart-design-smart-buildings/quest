@@ -40,7 +40,7 @@ class IFC23Strategy(VersionStrategy):
         return UNIVERSAL_BUILDING_ELEMENTS
     
     def extract_material_info(self, element):
-        """IFC 2.3 materialenextractie - eenvoudiger dan 4.x"""
+        """IFC 2.3 materialenextractie"""
         # Implementatie volgt in volgende fases
         pass
 
@@ -76,7 +76,6 @@ class IFC41Strategy(VersionStrategy):
         """IFC 4.1 materialenextractie"""
         pass
 
-
 class IFC43Strategy(VersionStrategy):
     """Extractiestrategie voor IFC 4.3"""
     
@@ -89,7 +88,7 @@ class IFC43Strategy(VersionStrategy):
         return UNIVERSAL_BUILDING_ELEMENTS
     
     def extract_material_info(self, element):
-        """IFC 4.3 materialenextractie - meest uitgebreid"""
+        """IFC 4.3 materialenextractie"""
         pass
 
 

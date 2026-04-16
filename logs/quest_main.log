@@ -22,3 +22,12 @@
 2026-04-16 12:38:28,645 - __main__ - INFO - Aantal bouwkundige elementen om te verwerken: 10
 2026-04-16 12:38:28,645 - __main__ - INFO - Bouwkundige elementen: IFCWALL, IFCDOOR, IFCWINDOW, IFCBEAM, IFCCOLUMN, IFCSLAB, IFCMEMBER, IFCCURTAINWALL, IFCROOF, IFCBUILDINGELEMENTPROXY
 2026-04-16 12:38:28,646 - __main__ - INFO - ============================================================
+2026-04-16 15:32:37,263 - __main__ - ERROR - Geen IFC-bestandspad opgegeven!
+2026-04-16 15:32:37,264 - __main__ - INFO - Gebruik: python main.py <C:\Users\cathy\Downloads\quest\4.3_bestand.ifc>
+2026-04-16 15:34:03,258 - __main__ - INFO - QUEST - BIM MATERIAALPROFILER
+2026-04-16 15:34:03,260 - __main__ - INFO - 
+============================================================
+2026-04-16 15:34:03,260 - __main__ - INFO - STAP 0: IFC-BESTAND INLADEN EN VERSIE DETECTEREN
+2026-04-16 15:34:03,260 - __main__ - INFO - ============================================================
+
+2026-04-16 15:36:01,061 - __main__ - ERROR - Kritieke fout: type object 'IFCVersion' has no attribute 'IFC_4_2'

@@ -65,7 +65,6 @@ class VersionDetector:
                 "IFC2X3": "2.3",
                 "IFC4": "4.0",
                 "IFC4X1": "4.1",
-                "IFC4X2": "4.2",
                 "IFC4X3": "4.3",
             }
             return version_map.get(schema)
@@ -95,8 +94,6 @@ class VersionDetector:
                     elif "4" in schema_str:
                         if "3" in schema_str:
                             return "4.3"
-                        elif "2" in schema_str:
-                            return "4.2"
                         elif "1" in schema_str:
                             return "4.1"
                         else:
