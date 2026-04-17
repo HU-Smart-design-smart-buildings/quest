@@ -1,0 +1,53 @@
+2026-04-17 10:29:47,480 - core.ifc_loader - INFO - Valideer IFC-bestand: C:\Users\cathy\Downloads\quest\2.3_bestand.ifc
+2026-04-17 10:32:07,727 - core.version_detector - INFO - Start IFC-versie detectie...
+2026-04-17 10:32:07,751 - core.version_strategies - INFO - IFC 2.3 strategie geladen
+2026-04-17 10:32:07,753 - core.step_1_element_collector - INFO - 
+============================================================
+2026-04-17 10:32:07,754 - core.step_1_element_collector - INFO - STAP 1: ALLE BOUWKUNDIGE ELEMENTEN VERZAMELEN
+2026-04-17 10:32:07,754 - core.step_1_element_collector - INFO - ============================================================
+
+2026-04-17 10:32:07,756 - core.element_extractor - INFO - ============================================================
+2026-04-17 10:32:07,756 - core.element_extractor - INFO - STAP 1: Bouwkundige elementen verzamelen
+2026-04-17 10:32:07,756 - core.element_extractor - INFO - ============================================================
+2026-04-17 10:32:07,757 - core.element_extractor - INFO - Stap 1.1: Parent-relatie map opbouwen...
+2026-04-17 10:32:07,788 - core.element_extractor - INFO - Stap 1.2: Alle bouwkundige elementen ophalen...
+2026-04-17 10:32:09,219 - core.element_extractor - WARNING - Kon elementen van type IFCDUCTSEGMENT niet ophalen: Entity with name 'IFCDUCTSEGMENT' not found in schema 'IFC2X3'
+2026-04-17 10:32:09,220 - core.element_extractor - WARNING - Kon elementen van type IFCPIPESEGMENT niet ophalen: Entity with name 'IFCPIPESEGMENT' not found in schema 'IFC2X3'
+2026-04-17 10:32:09,279 - core.element_extractor - INFO - Stap 1.3: Resultaten omzetten naar DataFrame...
+2026-04-17 10:32:09,369 - core.element_extractor - INFO - ============================================================
+2026-04-17 10:32:09,374 - core.completeness_reporter - INFO - Genereer volledigheidsrapport...
+2026-04-17 10:32:09,437 - core.completeness_reporter - INFO - Rapport opgeslagen: C:\Users\cathy\Downloads\quest\output\step_1_completeness_report.json
+2026-04-17 10:32:09,453 - core.completeness_reporter - INFO - ============================================================
+2026-04-17 10:32:09,453 - core.completeness_reporter - INFO - VOLLEDIGHEIDSRAPPORT - GLOBAAL
+2026-04-17 10:32:09,453 - core.completeness_reporter - INFO - ============================================================
+2026-04-17 10:32:09,453 - core.completeness_reporter - INFO - Totaal elementen: 3623
+2026-04-17 10:32:09,457 - core.completeness_reporter - INFO - ============================================================
+2026-04-17 10:32:09,457 - core.completeness_reporter - INFO - VOLLEDIGHEIDSRAPPORT - PER ELEMENT-TYPE
+2026-04-17 10:32:09,457 - core.completeness_reporter - INFO - ============================================================
+2026-04-17 10:32:09,457 - core.completeness_reporter - INFO - 
+IfcWall:
+2026-04-17 10:32:09,465 - core.completeness_reporter - INFO - 
+IfcWallStandardCase:
+2026-04-17 10:32:09,470 - core.completeness_reporter - INFO - 
+IfcDoor:
+2026-04-17 10:32:09,476 - core.completeness_reporter - INFO - 
+IfcWindow:
+2026-04-17 10:32:09,481 - core.completeness_reporter - INFO - 
+IfcBeam:
+2026-04-17 10:32:09,486 - core.completeness_reporter - INFO - 
+IfcSlab:
+2026-04-17 10:32:09,492 - core.completeness_reporter - INFO - 
+IfcMember:
+2026-04-17 10:32:09,498 - core.completeness_reporter - INFO - 
+IfcCurtainWall:
+2026-04-17 10:32:09,503 - core.completeness_reporter - INFO - 
+IfcRoof:
+2026-04-17 10:32:09,510 - core.completeness_reporter - INFO - 
+IfcBuildingElementProxy:
+2026-04-17 10:32:09,516 - core.completeness_reporter - INFO - 
+IfcCovering:
+2026-04-17 10:32:09,522 - core.completeness_reporter - INFO - 
+IfcRailing:
+2026-04-17 10:32:09,528 - core.step_1_element_collector - INFO - Sla tussentijdse resultaten op...
+2026-04-17 10:32:09,548 - core.step_1_element_collector - ERROR - Fout bij opslaan DataFrame: cannot pickle 'SwigPyObject' object
+2026-04-17 10:32:09,548 - core.step_1_element_collector - ERROR - Fout in Stap 1: cannot pickle 'SwigPyObject' object

@@ -68,7 +68,7 @@ class ElementExtractor:
                     children = rel.RelatedElements
                     
                     for child in children:
-                        self.parent_map[child.id()] = parent
+                        self.parent_map[child.id()] = parent.id()
                 except Exception as e:
                     logger.debug(f"Fout bij parent-map opbouw: {e}")
         
