@@ -48,3 +48,18 @@ LOG_LEVEL = "INFO"
 # Stap 1 configuratie
 STEP_1_OUTPUT_FILE = OUTPUT_DIR / "step_1_elements.pkl"
 STEP_1_REPORT_FILE = OUTPUT_DIR / "step_1_completeness_report.json"
+
+# Stap 2 configuratie
+STEP_2_OUTPUT_FILE = OUTPUT_DIR / "step_2_materials.pkl"
+STEP_2_MATERIAL_DEFINITIONS_FILE = OUTPUT_DIR / "step_2_material_definitions.pkl"
+STEP_2_REPORT_FILE = OUTPUT_DIR / "step_2_material_report.json"
+
+# Data Quality Flags
+DATA_QUALITY_OK = "OK"
+DATA_QUALITY_MISSING = "MISSING"
+
+# Material Sources (voor tracking)
+MATERIAL_SOURCE_DIRECT = "DIRECT"
+MATERIAL_SOURCE_LAYERSET = "LAYERSET"
+MATERIAL_SOURCE_CONSTITUENT = "CONSTITUENT"
+MATERIAL_SOURCE_COMPONENT = "COMPONENT"

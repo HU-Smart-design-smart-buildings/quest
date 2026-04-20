@@ -1,14 +1,279 @@
-c:\Users\cathy\Downloads\quest\
-├── main.py                          # Entry point
-├── config/
-│   └── config.py                    # Configuratie (paden, versies, logging)
-├── core/
-│   ├── __init__.py
-│   ├── ifc_loader.py               # IFC-bestand inladen & validatie
-│   ├── version_detector.py         # IFC-versie detectie
-│   ├── version_strategies.py       # Versiespecifieke logica
-│   └── logger.py                   # Logging-systeem
-├── output/
-│   └── (Excel-bestanden komen hier)
-└── logs/
-    └── (Log-bestanden)
+Voordat we Stap 0 uitwerken, heb ik enkele vragen:
+IFC-versie detectie (Stap 0): Moeten we specifieke logica voor IFC 2.3, 4.0, 4.1, 4.3 bouwen, of detecteren we alleen de versie en loggen we deze?
+    We willen specifieke logica voor IFC 2.3, 4.0, 4.1 en 4.3 bouwen, dit willen we wel met één uniform extractiemodel uitvoeren. Detecteer dus ook eerst de IFC-versie
+
+Geometrie-berekening: Voor volumeberekening - gebruiken we ifcopenshell.geom API voor 3D-geometrie, of focussen we primair op IFCMATERIALLAYERSET met laagdiktes × oppervlak?
+    Focus primair op de properties en daarna als fallback-logica via de 3D-geometrie.
+
+Laagopbouw: Bij samengestelde elementen (bv. muur = beton + isolatie + gips) - berekenen we het volume per laag apart, of nemen we het totale volume van het element en verdelen dit?
+    Samengestelde elementen moeten per laag apart gecategoriseerd en berekend worden
+
+Bestandsnaam/locatie: Waar moet het gegenereerde Excel-bestand worden opgeslagen? In dezelfde map als het IFC-bestand of een vaste output-map?
+    Het gegenereerde Excel-bestand moet in een vaste output-map worden opgeslagen
+
+Foutafhandeling: Moeten we blijven doorgaan met partial data als elementen incompleet zijn, of stoppen we met foutrapportage?
+    We gaan door met partial data, voeg bij de output "unknown" op de plek waar de data mist. Voeg bij de output een extra kolom toe met de status, wanneer een element alle data bevat staat deze status op OK, wanneer er één of meerdere data ontbreekt van het element staat de status op missing "specifieke data".
+    Waarbij "specifieke data" de ontbrekende kolom komt te staan (of een opsomming van meerdere kolommen)
+
+Een praktische keuze zou zijn:
+eerst IFC-versie detecteren, daarna properties uitlezen, daarna geometrie als fallback gebruiken, vervolgens materiaalinformatie standaardiseren en alles wegschrijven naar één vaste outputtabel.
+
+Zodra je deze punten helder maakt, kunnen we Stap 0 gestructureerd uitwerken met een solide basismodule.
+
+Stap 1
+❓ Vragen voor Stap 1: "Alle bouwkundige elementen verzamelen"
+1. Hiërarchie van elementen
+Moeten we alle instanties van bouwkundige elementen verzamelen (bijv. alle individuele muren)?
+Of willen we ook de TYPE-definities (IFCWALLTYPE, IFCBEAMTYPE, etc.) apart inventariseren?
+Moeten elementen die in andere elementen zitten (bijv. IFCDOOR in IFCWALL) apart gelogd worden of als onderdeel van hun parent?
+2. Output-structuur voor Stap 1
+Moet de output van Stap 1 een tussentijds dataformat zijn (bijv. CSV, JSON, pickle) of rechtstreeks in een Python datastructuur (pandas DataFrame)?
+Welke veldenmoeten in deze tussentijdse output zitten? Bijvoorbeeld:
+element_id
+element_type (bijv. IFCWALL)
+element_name
+parent_element (bijv. welke verdieping/ruimte)
+has_material_info (boolean)
+geometric_representation (boolean)
+Iets anders?
+3. Materiaalinformatie-detectie in Stap 1
+Moeten we in Stap 1 al detecteren welk soort materiaalinformatie er is (IFCMATERIALLAYER, IFCMATERIALCONSTITUENTSET, etc.)?
+Of is het voldoende om alleen true/false te loggen of er materiaal aan gekoppeld is?
+4. Geometrie-herkening in Stap 1
+Moet Stap 1 al controleren of een element geometrie heeft?
+Of controleren we geometrie pas in Stap 5 ("Hoeveelheden uitlezen")?
+5. "Onbekende" elementen
+Moeten we ook IFCBUILDINGELEMENTPROXY en andere "proxy"-elementen opnemen?
+Zijn er andere entiteitstypes die we moeten include/exclude?
+6. Logging en rapportage
+In Stap 1: Moeten we al een volledigheidsrapport genereren (hoeveel % van elementen heeft materiaaldata)?
+Of schuiven we dit naar Fase 1 summary?
+7. Ruimtelijke structuur
+Moeten we de gebouwhiërarchie bijhouden (Project → Site → Building → Storey → Ruimte → Element)?
+Of focussen we alleen op de elementen zelf?
+8. Type-elementen vs. Instanties
+Verschil:
+Instantie: Een specifieke muur ("Muur_Kamer_A")
+Type: De blauwdruk ("MuurType_Gevelbeton")
+Moeten we beide verzamelen en linken?
+
+1. We willen alle individuele bouwkundige elementen verzamelen. Elementen die in andere elementen zitten moeten apart gelogd worden
+2. de output van stap 1 moet rechtstreeeks in een python datastructuur komen. Hierin moeten de volgende velden: 
+- element_id
+- element_type
+- element_name
+- type_link
+- type_name
+- has_material_info (boolean)
+- geomtric_representation (boolean)
+- ifcmaterial (boolean)
+3. loggen van de informatie true/false is voldoende
+4. ja wel controleren of een element geometrie heeft
+5. ja IFCBUILDINGELEMENTPROXY en andere "proxy"-elementen moeten ook meegenomen worden. Neem ook mee:
+- IFCPLATE
+- IFCCOVERING
+- IFCFOOTING
+- IFCSTAIR
+- IFCBUILDINGELEMENTPART
+- IFCELEMENTASSEMBLY
+- IFCDUCTSEGMENT
+- IFCPIPESEGMENT
+- IFCRAILING
+6. er moet een volledigheidsrapport gegenereerd worden. Hierin moet het totaal aantal elementen met materiaalinformatie en het totaal aantal elementen zonder materiaalinformatie zichtbaar komen. Ook is hieraan een percentage over het verschil tussen het totaal aantal elementen met materiaalinformatie en het aantal elementen zonder materiaalinformatie gekoppeld.
+7. nee, focus alleen op de elementen zelf
+8. verzamelt alle instanties van bouwkundige elementen. Als een element gekoppeld is aan een type-definitie, wordt deze link vastgelegd. Type-objecten worden niet als losse elementen meegeteld, maar alleen gebruikt als aanvullende informatiebron voor latere stappen.
+
+RAGEN voordat ik de modules schrijf
+1. Element-naamgeving en fallbacks
+Als een element geen naam heeft (element.Name is None/leeg):
+
+Gebruiken we automatisch het element_id als fallback?
+Of gebruiken we een generieke naam zoals "IFCWALL_[ID]"?
+Voorbeeld:
+
+2. TYPE-link logica
+Voor de type_link en type_name velden:
+
+Vraag: Moet type_link het IFC-ID van het type-object zijn, of de TYPE-klassenaam (bijv. "IFCWALLTYPE")?
+
+3. Materiaalinformatie detectie
+Voor has_material_info (boolean) - moet dit true zijn als:
+
+ Element heeft IFCMATERIAL gekoppeld?
+ Element heeft IFCMATERIALLAYERSET gekoppeld?
+ Element heeft IFCMATERIALCONSTITUENTSET gekoppeld?
+ Element heeft ANY van bovenstaande?
+ Element heeft een IFCRELASSOCIATESMATERIAL relatie?
+Wat is de logica voor "has_material_info"? TRUE = minstens één van bovenstaande?
+
+4. Geometrie-representatie detectie
+Voor geometric_representation (boolean) - moet dit true zijn als:
+
+ Element heeft IFCPRODUCTDEFINITIONSHAPE?
+ Element heeft IFCSHAPEREPRESENTATION?
+ ifcopenshell.geom kan er een 3D-geometrie van maken?
+ Element heeft een geldige 3D-representatie (niet alleen 2D)?
+Voorkeur: Wat willen we controleren?
+
+5. IFCMATERIAL kolom
+De ifcmaterial kolom lijkt wat redundant met has_material_info.
+
+Vraag:
+
+Is ifcmaterial hetzelfde als has_material_info?
+Of moet dit true zijn alleen als het type IFCMATERIAL is (niet LayerSet/ConstituentSet)?
+Of moet dit het materiaal-klassenaam bevatten (string)?
+6. Onderliggende elementen (nested elements)
+Voor elementen die in andere zitten (bijv. IFCDOOR in IFCWALL):
+
+Vraag:
+
+Moeten we een extra kolom parent_element_id toevoegen?
+Of is het voldoende dat we ze allebei als losse rijen in de DataFrame opnemen?
+7. Compleetheidsrapport - granulariteit
+Voor het volledigheidsrapport, willen we:
+
+Of gedetailleerder per element-type?
+
+Welke variant?
+
+8. Elementen die we UITSLUITEN
+Je gaf mij een lijst elements om mee te nemen. Moeten we bepaalde element-types uitluiten? Bijvoorbeeld:
+
+IFCLIGHTFIXTURE (verlichtingsarmatuur)?
+IFCSPACE / IFCZONE (ruimtelijke concepten)?
+IFCEQUIPMENT (apparatuur)?
+Iets anders?
+
+1. gebruik als fallback de generieke naam zoals "IFCWALL_[ID]"
+
+2. gebruik voor type_link het IFC-ID van het type-object
+
+3. TRUE = als het minstens één onderdeel aanwezig is
+
+4. TRUE = als minstens één eigenschap aanwezig is
+
+5. ifcmaterial kan vervallen bij de ouput velden van de python datastructuur
+
+6. voeg en extra kolom toe, maar ze moeten allebei ook als losse rijen worden opgenomen
+
+7. gedetailleerd per element-type 
+
+8. sluit IFCSPACE / IFCZONE uit
+❓ VRAGEN VOOR STAP 2: Materiaalkoppelingen ophalen
+1. Materiaalkoppelingen - bronnen en prioriteit
+Voor het ophalen van materiaalinfo per element, zijn meerdere bronnen mogelijk:
+ 
+Vraag:
+ Moeten we alle bronnen controleren (prioriteit: direct > type > layerset > constitute)?
+ Of alleen de "echte" materiaalkoppelingen (niet via types)?
+ Wat doen we als BEIDE direct EN type gekoppeld zijn?
+2. Gelaagde materialen (IFCMATERIALLAYERSET)
+Voor een muur met opbouw: beton (30cm) + isolatie (10cm) + gips (2cm):
+ 
+Vraag:
+ Sla je elk materiaal apart op met zijn eigen dikte (3 rijen)?
+ Of groepeer je ze per element (1 rij met array van materialen)?
+ Wat doen we met de LayerSetName? Is dit relevant?
+ Moeten we layers ook opslaan met hun positie (welke laag is het)?
+3. Samengestelde materialen (IFCMATERIALCONSTITUENTSET)
+Bij samengestelde materialen hebben we fracties/percentages:
+
+Vraag:
+ Sla je de fraction als percentage op?
+ Gebruiken we deze fractions later in Stap 5 voor volumeberekening?
+ Of is dit informatief en berekenen we volume per constituent?
+4. Materialen zonder informatie
+Voor elementen zonder materiaaldata:
+
+Vraag:
+ Welke aanpak: A, B, C, of D?
+ Moeten we dit apart loggen voor Stap 7 rapportage?
+5. Material Properties (dichtheid, etc.)
+Materialen kunnen ook verdere eigenschappen hebben:
+
+Vraag:
+ Ophalen we nu ook IFCMATERIALPROPERTIES (dichtheid, thermische waarde, etc.)?
+ Of focused we puur op materiaal-NAAM en opbouw (Stap 2)?
+ Wanneer halen we properties op: Stap 2 of Stap 6 ("Aanvullende eigenschappen")?
+6. Profilengerelateerde materialen
+In het Context staat: "profielgebonden materialen" - dit duidt op:
+ 
+Vraag:
+ Moet Stap 2 ook deur/raam-componenten ophalen via deze properties?
+ Of doen we dit in een aparte logic?
+ Hoe behandelen we "composiet" elementen (bijv. raam met meerdere materialen)?
+7. Output-structuur Stap 2
+Wat moet de tussentijdse output zijn? Optie A of B?
+Optie A: Platte structuur (één rij per material link)
+
+Optie B: Geneste structuur (materialen per element)
+
+Vraag: Welke variant wil je?
+8. Data-validatie in Stap 2
+Wat doen we met onlogische of verdachte data?
+
+Vraag:
+ Alleen loggen en doorgaan?
+ Flag "data_quality" toevoegen (OK/WARNING/ERROR)?
+ Elementen met slechte data overslaan?
+9. Nested elements & onderdelen
+Voor nested elements (bijv. deur in muur):
+ 
+Vraag:
+ Halen we materiaal voor BEIDE op (wall EN deur)?
+ Of koppelen we deur-materiaal aan parent muur?
+ Hoe traceren we dit in Stap 2?
+10. Performance & Caching
+Dezelfde materiaaldefinities kunnen voor meerdere elementen gebruikt worden:
+ 
+Vraag:
+ Moeten we type-definities cachen voor performance?
+ Of een aparte material_definitions.pkl opslaan?
+ Hoe traceren we later welke elementen dezelfde material-definition gebruiken?
+
+1. 
+- Controleer alle bronnen voor het ophalen van materiaalinfo van elk element.
+- We willen alleen de echte materiaalkoppelingen en niet van de types
+- type is dus niet gekoppeld
+
+2. 
+- Sla elk materiaal apart op met zijn eigen dikte
+- Je groepeert ze niet
+- Neem de LayerSetName wel mee
+- De positie van de laag is niet relevant 
+
+3. 
+- Het moet opgeslagen worden in percentages
+- Ja dit gebruik je later in stap 5
+- Nee dit is niet informatief, we berekenen uiteindelijk met het percentage
+
+4. 
+- Keuze voor B
+- Ja log dit apart
+
+5.
+- Nee we halen niet de dichtheid, thermische waarde enz. op
+- we focussen puur op materiaal-naam en opbouw
+- stap 6
+
+6. 
+- Ja ook de deur/raam-componenten moeten worden opgehaald
+- composieten elementen moeten op dezelfde manier worden aangepakt als samengestelde materialen
+
+7. 
+- optie A moet de tussentijdse output zijn
+
+8. 
+- wel loggen
+- voeg wel een kolom met data_quality toe
+
+9. 
+- het materiaal voor beide moet worden opgehaald
+- de deur moet niet worden samengevoegd aan de parent muur
+- relatie hoeft niet worden vastgelegd
+
+10.
+- Ja type-definities cachen moet gebruikt worden
+- Ja een aparte material_definitions.pkl is van toepassing
+- Het traceren is niet nodig

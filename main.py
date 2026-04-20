@@ -1,10 +1,18 @@
 import sys
 from pathlib import Path
-from core.ifc_loader import IFCLoader
-from core.version_detector import VersionDetector
-from core.version_strategies import get_strategy
+
+# Imports van Stap 0
+from core.step_0.ifc_loader import IFCLoader
+from core.step_0.version_detector import VersionDetector
+from core.step_0.version_strategies import get_strategy
+
+# Imports van Stap 1
+from core.step_1.step_1_element_collector import Step1ElementCollector
+
+# Imports van Stap 2
+from core.step_2.step_2_material_collector import Step2MaterialCollector
+
 from core.logger import setup_logger
-from core.step_1_element_collector import Step1ElementCollector
 
 logger = setup_logger(__name__, "quest_main.log")
 
@@ -74,9 +82,28 @@ def execute_step_1(step_0_results):
     return step_1_results
 
 
+def execute_step_2(step_0_results, step_1_results):
+    """
+    STAP 2: Materiaalkoppelingen ophalen.
+    """
+    if step_0_results is None or step_1_results is None:
+        logger.error("Stap 0 of 1 faalde. Kan Stap 2 niet uitvoeren.")
+        return None
+    
+    ifc_file = step_0_results["ifc_file"]
+    ifc_version_enum = step_0_results["ifc_version_enum"]
+    elements_df = step_1_results["elements_df"]
+    
+    # Voer Stap 2 uit
+    collector = Step2MaterialCollector(ifc_file, elements_df, ifc_version_enum)
+    step_2_results = collector.execute()
+    
+    return step_2_results
+
+
 def main(ifc_file_path):
     """
-    Hoofdfunctie: Voer beide stappen uit.
+    Hoofdfunctie: Voer alle stappen uit.
     """
     print("\n" + "=" * 30)
     print("QUEST - BIM MATERIAALPROFILER")
@@ -93,11 +120,16 @@ def main(ifc_file_path):
         if not step_1_results:
             return False
         
+        # STAP 2
+        step_2_results = execute_step_2(step_0_results, step_1_results)
+        if not step_2_results:
+            return False
+        
         print("\n" + "=" * 60)
         print("[OK] ALLE STAPPEN SUCCESVOL VOLTOOID")
         print("=" * 60)
-        print(f"Totaal elementen verzameld: {step_1_results['total_elements']}")
-        print(f"Elementen met materiaalinfo: {step_1_results['elements_with_material']}")
+        print(f"Totaal elementen verzameld (Stap 1): {step_1_results['total_elements']}")
+        print(f"Totaal materiaalkoppelingen (Stap 2): {step_2_results['total_material_entries']}")
         print("=" * 60 + "\n")
         
         return True

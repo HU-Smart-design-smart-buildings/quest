@@ -2,8 +2,8 @@ import pandas as pd
 from pathlib import Path
 from config.config import STEP_1_OUTPUT_FILE, STEP_1_REPORT_FILE
 from core.logger import setup_logger
-from core.element_extractor import ElementExtractor
-from core.completeness_reporter import CompletenessReporter
+from core.step_1.element_extractor import ElementExtractor
+from core.step_1.completeness_reporter import CompletenessReporter
 
 logger = setup_logger(__name__)
 
