@@ -32,24 +32,24 @@ class ElementExtractor:
         Returns:
             pd.DataFrame met element-informatie
         """
-        logger.info("=" * 60)
-        logger.info("STAP 1: Bouwkundige elementen verzamelen")
-        logger.info("=" * 60)
+        print("=" * 60)
+        print("STAP 1: Bouwkundige elementen verzamelen")
+        print("=" * 60)
         
         # Stap 1: Bouw parent-relatie map voor nested elements
-        logger.info("Stap 1.1: Parent-relatie map opbouwen...")
+        print("Stap 1.1: Parent-relatie map opbouwen...")
         self._build_parent_map()
         
         # Stap 2: Haal alle elementen op
-        logger.info("Stap 1.2: Alle bouwkundige elementen ophalen...")
+        print("Stap 1.2: Alle bouwkundige elementen ophalen...")
         self._extract_elements()
         
         # Stap 3: Zet in DataFrame
-        logger.info("Stap 1.3: Resultaten omzetten naar DataFrame...")
+        print("Stap 1.3: Resultaten omzetten naar DataFrame...")
         df = pd.DataFrame(self.elements_data)
         
-        logger.info(f"✓ {len(df)} elementen geëxtraheerd")
-        logger.info("=" * 60)
+        print(f"[OK] {len(df)} elementen geëxtraheerd")
+        print("=" * 60)
         
         return df
     
@@ -107,7 +107,7 @@ class ElementExtractor:
                 logger.warning(f"Kon elementen van type {element_type} niet ophalen: {e}")
                 continue
         
-        logger.info(f"✓ {extracted_count} elementen succesvol verwerkt")
+        print(f"[OK] {extracted_count} elementen succesvol verwerkt")
     
     def _extract_element_info(self, element):
         """

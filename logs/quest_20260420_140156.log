@@ -1,0 +1,5 @@
+2026-04-20 14:01:57,631 - core.ifc_loader - INFO - Valideer IFC-bestand: C:\Users\cathy\Downloads\quest\4.3_bestand.ifc
+2026-04-20 14:04:16,490 - core.ifc_loader - INFO - [OK] IFC-bestand succesfully ingeladen
+2026-04-20 14:04:16,505 - core.version_detector - INFO - Start IFC-versie detectie...
+2026-04-20 14:04:16,514 - core.version_detector - INFO - [OK] IFC-versie gedetecteerd (via schema): 4.3
+2026-04-20 14:04:16,515 - core.version_strategies - INFO - IFC 4.3 strategie geladen

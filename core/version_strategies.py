@@ -33,7 +33,7 @@ class IFC23Strategy(VersionStrategy):
     
     def __init__(self, ifc_file):
         super().__init__(ifc_file, IFCVersion.IFC_2_3)
-        logger.info("IFC 2.3 strategie geladen")
+        print("IFC 2.3 strategie geladen")
     
     def get_building_elements(self):
         """Retourneer dezelfde elementen als andere versies."""
@@ -50,7 +50,7 @@ class IFC40Strategy(VersionStrategy):
     
     def __init__(self, ifc_file):
         super().__init__(ifc_file, IFCVersion.IFC_4_0)
-        logger.info("IFC 4.0 strategie geladen")
+        print("IFC 4.0 strategie geladen")
     
     def get_building_elements(self):
         """Retourneer dezelfde elementen als andere versies."""
@@ -66,7 +66,7 @@ class IFC41Strategy(VersionStrategy):
     
     def __init__(self, ifc_file):
         super().__init__(ifc_file, IFCVersion.IFC_4_1)
-        logger.info("IFC 4.1 strategie geladen")
+        print("IFC 4.1 strategie geladen")
     
     def get_building_elements(self):
         """Retourneer dezelfde elementen als andere versies."""
@@ -76,12 +76,13 @@ class IFC41Strategy(VersionStrategy):
         """IFC 4.1 materialenextractie"""
         pass
 
+
 class IFC43Strategy(VersionStrategy):
     """Extractiestrategie voor IFC 4.3"""
     
     def __init__(self, ifc_file):
         super().__init__(ifc_file, IFCVersion.IFC_4_3)
-        logger.info("IFC 4.3 strategie geladen")
+        print("IFC 4.3 strategie geladen")
     
     def get_building_elements(self):
         """Retourneer dezelfde elementen als andere versies."""

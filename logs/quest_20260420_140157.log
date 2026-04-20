@@ -1,0 +1,98 @@
+2026-04-20 14:04:16,520 - core.step_1_element_collector - INFO - 
+============================================================
+2026-04-20 14:04:16,521 - core.step_1_element_collector - INFO - STAP 1: ALLE BOUWKUNDIGE ELEMENTEN VERZAMELEN
+2026-04-20 14:04:16,521 - core.step_1_element_collector - INFO - ============================================================
+
+2026-04-20 14:04:16,523 - core.element_extractor - INFO - ============================================================
+2026-04-20 14:04:16,523 - core.element_extractor - INFO - STAP 1: Bouwkundige elementen verzamelen
+2026-04-20 14:04:16,524 - core.element_extractor - INFO - ============================================================
+2026-04-20 14:04:16,524 - core.element_extractor - INFO - Stap 1.1: Parent-relatie map opbouwen...
+2026-04-20 14:04:16,598 - core.element_extractor - INFO - Stap 1.2: Alle bouwkundige elementen ophalen...
+2026-04-20 14:04:51,956 - core.element_extractor - INFO - [OK] 3922 elementen succesvol verwerkt
+2026-04-20 14:04:51,957 - core.element_extractor - INFO - Stap 1.3: Resultaten omzetten naar DataFrame...
+2026-04-20 14:04:51,995 - core.element_extractor - INFO - [OK] 3922 elementen geëxtraheerd
+2026-04-20 14:04:51,996 - core.element_extractor - INFO - ============================================================
+2026-04-20 14:04:52,002 - core.completeness_reporter - INFO - Genereer volledigheidsrapport...
+2026-04-20 14:04:52,058 - core.completeness_reporter - INFO - Rapport opgeslagen: C:\Users\cathy\Downloads\quest\output\step_1_completeness_report.json
+2026-04-20 14:04:52,058 - core.completeness_reporter - INFO - [OK] Volledigheidsrapport gegenereerd
+2026-04-20 14:04:52,058 - core.completeness_reporter - INFO - ============================================================
+2026-04-20 14:04:52,058 - core.completeness_reporter - INFO - VOLLEDIGHEIDSRAPPORT - GLOBAAL
+2026-04-20 14:04:52,058 - core.completeness_reporter - INFO - ============================================================
+2026-04-20 14:04:52,058 - core.completeness_reporter - INFO - Totaal elementen: 3922
+2026-04-20 14:04:52,058 - core.completeness_reporter - INFO -   - Met materiaalinfo: 3014 (76.85%)
+2026-04-20 14:04:52,058 - core.completeness_reporter - INFO -   - Zonder materiaalinfo: 908 (23.15%)
+2026-04-20 14:04:52,059 - core.completeness_reporter - INFO - ============================================================
+2026-04-20 14:04:52,059 - core.completeness_reporter - INFO - VOLLEDIGHEIDSRAPPORT - PER ELEMENT-TYPE
+2026-04-20 14:04:52,059 - core.completeness_reporter - INFO - ============================================================
+2026-04-20 14:04:52,059 - core.completeness_reporter - INFO - 
+IfcWall:
+2026-04-20 14:04:52,059 - core.completeness_reporter - INFO -   - Totaal: 1367
+2026-04-20 14:04:52,059 - core.completeness_reporter - INFO -   - Met materiaal: 1354 (99.05%)
+2026-04-20 14:04:52,059 - core.completeness_reporter - INFO -   - Zonder materiaal: 13 (0.95%)
+2026-04-20 14:04:52,059 - core.completeness_reporter - INFO - 
+IfcDoor:
+2026-04-20 14:04:52,059 - core.completeness_reporter - INFO -   - Totaal: 108
+2026-04-20 14:04:52,059 - core.completeness_reporter - INFO -   - Met materiaal: 108 (100.0%)
+2026-04-20 14:04:52,059 - core.completeness_reporter - INFO -   - Zonder materiaal: 0 (0.0%)
+2026-04-20 14:04:52,059 - core.completeness_reporter - INFO - 
+IfcWindow:
+2026-04-20 14:04:52,060 - core.completeness_reporter - INFO -   - Totaal: 441
+2026-04-20 14:04:52,060 - core.completeness_reporter - INFO -   - Met materiaal: 441 (100.0%)
+2026-04-20 14:04:52,060 - core.completeness_reporter - INFO -   - Zonder materiaal: 0 (0.0%)
+2026-04-20 14:04:52,060 - core.completeness_reporter - INFO - 
+IfcBeam:
+2026-04-20 14:04:52,060 - core.completeness_reporter - INFO -   - Totaal: 37
+2026-04-20 14:04:52,061 - core.completeness_reporter - INFO -   - Met materiaal: 0 (0.0%)
+2026-04-20 14:04:52,061 - core.completeness_reporter - INFO -   - Zonder materiaal: 37 (100.0%)
+2026-04-20 14:04:52,061 - core.completeness_reporter - INFO - 
+IfcSlab:
+2026-04-20 14:04:52,061 - core.completeness_reporter - INFO -   - Totaal: 371
+2026-04-20 14:04:52,061 - core.completeness_reporter - INFO -   - Met materiaal: 127 (34.23%)
+2026-04-20 14:04:52,061 - core.completeness_reporter - INFO -   - Zonder materiaal: 244 (65.77%)
+2026-04-20 14:04:52,061 - core.completeness_reporter - INFO - 
+IfcMember:
+2026-04-20 14:04:52,061 - core.completeness_reporter - INFO -   - Totaal: 418
+2026-04-20 14:04:52,061 - core.completeness_reporter - INFO -   - Met materiaal: 0 (0.0%)
+2026-04-20 14:04:52,061 - core.completeness_reporter - INFO -   - Zonder materiaal: 418 (100.0%)
+2026-04-20 14:04:52,061 - core.completeness_reporter - INFO - 
+IfcCurtainWall:
+2026-04-20 14:04:52,062 - core.completeness_reporter - INFO -   - Totaal: 73
+2026-04-20 14:04:52,062 - core.completeness_reporter - INFO -   - Met materiaal: 0 (0.0%)
+2026-04-20 14:04:52,062 - core.completeness_reporter - INFO -   - Zonder materiaal: 73 (100.0%)
+2026-04-20 14:04:52,062 - core.completeness_reporter - INFO - 
+IfcRoof:
+2026-04-20 14:04:52,062 - core.completeness_reporter - INFO -   - Totaal: 24
+2026-04-20 14:04:52,062 - core.completeness_reporter - INFO -   - Met materiaal: 24 (100.0%)
+2026-04-20 14:04:52,062 - core.completeness_reporter - INFO -   - Zonder materiaal: 0 (0.0%)
+2026-04-20 14:04:52,062 - core.completeness_reporter - INFO - 
+IfcBuildingElementProxy:
+2026-04-20 14:04:52,062 - core.completeness_reporter - INFO -   - Totaal: 1001
+2026-04-20 14:04:52,062 - core.completeness_reporter - INFO -   - Met materiaal: 878 (87.71%)
+2026-04-20 14:04:52,062 - core.completeness_reporter - INFO -   - Zonder materiaal: 123 (12.29%)
+2026-04-20 14:04:52,062 - core.completeness_reporter - INFO - 
+IfcCovering:
+2026-04-20 14:04:52,062 - core.completeness_reporter - INFO -   - Totaal: 28
+2026-04-20 14:04:52,062 - core.completeness_reporter - INFO -   - Met materiaal: 28 (100.0%)
+2026-04-20 14:04:52,062 - core.completeness_reporter - INFO -   - Zonder materiaal: 0 (0.0%)
+2026-04-20 14:04:52,062 - core.completeness_reporter - INFO - 
+IfcDuctSegment:
+2026-04-20 14:04:52,063 - core.completeness_reporter - INFO -   - Totaal: 12
+2026-04-20 14:04:52,063 - core.completeness_reporter - INFO -   - Met materiaal: 12 (100.0%)
+2026-04-20 14:04:52,063 - core.completeness_reporter - INFO -   - Zonder materiaal: 0 (0.0%)
+2026-04-20 14:04:52,063 - core.completeness_reporter - INFO - 
+IfcPipeSegment:
+2026-04-20 14:04:52,063 - core.completeness_reporter - INFO -   - Totaal: 36
+2026-04-20 14:04:52,063 - core.completeness_reporter - INFO -   - Met materiaal: 36 (100.0%)
+2026-04-20 14:04:52,063 - core.completeness_reporter - INFO -   - Zonder materiaal: 0 (0.0%)
+2026-04-20 14:04:52,064 - core.completeness_reporter - INFO - 
+IfcRailing:
+2026-04-20 14:04:52,064 - core.completeness_reporter - INFO -   - Totaal: 6
+2026-04-20 14:04:52,064 - core.completeness_reporter - INFO -   - Met materiaal: 6 (100.0%)
+2026-04-20 14:04:52,064 - core.completeness_reporter - INFO -   - Zonder materiaal: 0 (0.0%)
+2026-04-20 14:04:52,064 - core.step_1_element_collector - INFO - Sla tussentijdse resultaten op...
+2026-04-20 14:04:52,078 - core.step_1_element_collector - INFO - [OK] DataFrame opgeslagen: C:\Users\cathy\Downloads\quest\output\step_1_elements.pkl
+2026-04-20 14:04:52,078 - core.step_1_element_collector - INFO - 
+============================================================
+2026-04-20 14:04:52,078 - core.step_1_element_collector - INFO - [OK] STAP 1 SUCCESVOL VOLTOOID
+2026-04-20 14:04:52,078 - core.step_1_element_collector - INFO - ============================================================
+

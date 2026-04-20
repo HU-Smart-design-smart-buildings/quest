@@ -12,9 +12,9 @@ def execute_step_0(ifc_file_path):
     """
     STAP 0: IFC-bestand inladen en versie detecteren.
     """
-    logger.info("\n" + "=" * 60)
-    logger.info("STAP 0: IFC-BESTAND INLADEN EN VERSIE DETECTEREN")
-    logger.info("=" * 60 + "\n")
+    print("\n" + "=" * 60)
+    print("STAP 0: IFC-BESTAND INLADEN EN VERSIE DETECTEREN")
+    print("=" * 60 + "\n")
     
     # Valideer en laad het IFC-bestand
     loader = IFCLoader(ifc_file_path)
@@ -34,14 +34,14 @@ def execute_step_0(ifc_file_path):
     building_elements = strategy.get_building_elements()
     
     # Log resultaten
-    logger.info("=" * 60)
-    logger.info("STAP 0 - RESULTATEN")
-    logger.info("=" * 60)
-    logger.info(f"Bestand: {ifc_file_path}")
-    logger.info(f"Bestandsgrootte: {file_info.get('bestandsgrootte_mb', 'N/A'):.2f} MB")
-    logger.info(f"Gedetecteerde versie: {version_string}")
-    logger.info(f"Aantal bouwkundige elementen-typen: {len(building_elements)}")
-    logger.info("=" * 60 + "\n")
+    print("=" * 60)
+    print("STAP 0 - RESULTATEN")
+    print("=" * 60)
+    print(f"Bestand: {ifc_file_path}")
+    print(f"Bestandsgrootte: {file_info.get('bestandsgrootte_mb', 'N/A'):.2f} MB")
+    print(f"Gedetecteerde versie: {version_string}")
+    print(f"Aantal bouwkundige elementen-typen: {len(building_elements)}")
+    print("=" * 60 + "\n")
     
     # Retourneer Stap 0 output
     return {
@@ -78,9 +78,9 @@ def main(ifc_file_path):
     """
     Hoofdfunctie: Voer beide stappen uit.
     """
-    logger.info("\n" + "🚀" * 30)
-    logger.info("QUEST - BIM MATERIAALPROFILER")
-    logger.info("🚀" * 30 + "\n")
+    print("\n" + "=" * 30)
+    print("QUEST - BIM MATERIAALPROFILER")
+    print("=" * 30 + "\n")
     
     try:
         # STAP 0
@@ -93,12 +93,12 @@ def main(ifc_file_path):
         if not step_1_results:
             return False
         
-        logger.info("\n" + "=" * 60)
-        logger.info("✓ ALLE STAPPEN SUCCESVOL VOLTOOID")
-        logger.info("=" * 60)
-        logger.info(f"Totaal elementen verzameld: {step_1_results['total_elements']}")
-        logger.info(f"Elementen met materiaalinfo: {step_1_results['elements_with_material']}")
-        logger.info("=" * 60 + "\n")
+        print("\n" + "=" * 60)
+        print("[OK] ALLE STAPPEN SUCCESVOL VOLTOOID")
+        print("=" * 60)
+        print(f"Totaal elementen verzameld: {step_1_results['total_elements']}")
+        print(f"Elementen met materiaalinfo: {step_1_results['elements_with_material']}")
+        print("=" * 60 + "\n")
         
         return True
     
@@ -112,7 +112,7 @@ if __name__ == "__main__":
         ifc_path = sys.argv[1]
     else:
         logger.error("Geen IFC-bestandspad opgegeven!")
-        logger.info("Gebruik: python main.py <C:\\Users\\cathy\\Downloads\\quest\\4.3_bestand.ifc>")
+        print("Gebruik: python main.py <C:\\Users\\cathy\\Downloads\\quest\\4.3_bestand.ifc>")
         sys.exit(1)
     
     success = main(ifc_path)

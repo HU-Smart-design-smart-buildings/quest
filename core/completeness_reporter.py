@@ -21,7 +21,7 @@ class CompletenessReporter:
         Returns:
             dict met rapport
         """
-        logger.info("Genereer volledigheidsrapport...")
+        print("Genereer volledigheidsrapport...")
         
         # Calculate global statistics
         self.report['global'] = self._calculate_global_stats()
@@ -35,7 +35,7 @@ class CompletenessReporter:
         # Save rapport
         self._save_report()
         
-        logger.info("✓ Volledigheidsrapport gegenereerd")
+        print("[OK] Volledigheidsrapport gegenereerd")
         
         return self.report
     
@@ -87,7 +87,7 @@ class CompletenessReporter:
             with open(self.output_file, 'w', encoding='utf-8') as f:
                 json.dump(self.report, f, indent=4, ensure_ascii=False)
             
-            logger.info(f"Rapport opgeslagen: {self.output_file}")
+            print(f"Rapport opgeslagen: {self.output_file}")
         
         except Exception as e:
             logger.error(f"Fout bij opslaan rapport: {e}")
@@ -96,21 +96,21 @@ class CompletenessReporter:
         """
         Print rapport in leesbaar formaat naar console.
         """
-        logger.info("=" * 60)
-        logger.info("VOLLEDIGHEIDSRAPPORT - GLOBAAL")
-        logger.info("=" * 60)
+        print("=" * 60)
+        print("VOLLEDIGHEIDSRAPPORT - GLOBAAL")
+        print("=" * 60)
         
         global_stats = self.report.get('global', {})
-        logger.info(f"Totaal elementen: {global_stats.get('total_elements', 0)}")
-        logger.info(f"  ├─ Met materiaalinfo: {global_stats.get('elements_with_material', 0)} ({global_stats.get('percentage_with_material', 0)}%)")
-        logger.info(f"  └─ Zonder materiaalinfo: {global_stats.get('elements_without_material', 0)} ({global_stats.get('percentage_without_material', 0)}%)")
+        print(f"Totaal elementen: {global_stats.get('total_elements', 0)}")
+        print(f"  - Met materiaalinfo: {global_stats.get('elements_with_material', 0)} ({global_stats.get('percentage_with_material', 0)}%)")
+        print(f"  - Zonder materiaalinfo: {global_stats.get('elements_without_material', 0)} ({global_stats.get('percentage_without_material', 0)}%)")
         
-        logger.info("=" * 60)
-        logger.info("VOLLEDIGHEIDSRAPPORT - PER ELEMENT-TYPE")
-        logger.info("=" * 60)
+        print("\n" + "=" * 60)
+        print("VOLLEDIGHEIDSRAPPORT - PER ELEMENT-TYPE")
+        print("=" * 60)
         
         for element_type, stats in self.report.get('per_type', {}).items():
-            logger.info(f"\n{element_type}:")
-            logger.info(f"  ├─ Totaal: {stats.get('total', 0)}")
-            logger.info(f"  ├─ Met materiaal: {stats.get('with_material', 0)} ({stats.get('percentage_with_material', 0)}%)")
-            logger.info(f"  └─ Zonder materiaal: {stats.get('without_material', 0)} ({stats.get('percentage_without_material', 0)}%)")
+            print(f"\n{element_type}:")
+            print(f"  - Totaal: {stats.get('total', 0)}")
+            print(f"  - Met materiaal: {stats.get('with_material', 0)} ({stats.get('percentage_with_material', 0)}%)")
+            print(f"  - Zonder materiaal: {stats.get('without_material', 0)} ({stats.get('percentage_without_material', 0)}%)")

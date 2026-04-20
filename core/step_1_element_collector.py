@@ -25,9 +25,9 @@ class Step1ElementCollector:
         Returns:
             dict met resultaten
         """
-        logger.info("\n" + "=" * 60)
-        logger.info("STAP 1: ALLE BOUWKUNDIGE ELEMENTEN VERZAMELEN")
-        logger.info("=" * 60 + "\n")
+        print("\n" + "=" * 60)
+        print("STAP 1: ALLE BOUWKUNDIGE ELEMENTEN VERZAMELEN")
+        print("=" * 60 + "\n")
         
         try:
             # Stap 1.1: Extractie
@@ -39,9 +39,9 @@ class Step1ElementCollector:
             # Stap 1.3: Opslaan
             self._save_results()
             
-            logger.info("\n" + "=" * 60)
-            logger.info("✓ STAP 1 SUCCESVOL VOLTOOID")
-            logger.info("=" * 60 + "\n")
+            print("\n" + "=" * 60)
+            print("[OK] STAP 1 SUCCESVOL VOLTOOID")
+            print("=" * 60 + "\n")
             
             return self._get_results()
         
@@ -68,13 +68,13 @@ class Step1ElementCollector:
         """
         Sla tussentijdse resultaten op.
         """
-        logger.info("Sla tussentijdse resultaten op...")
+        print("Sla tussentijdse resultaten op...")
         
         try:
             # Sla DataFrame op als pickle
             Path(STEP_1_OUTPUT_FILE).parent.mkdir(parents=True, exist_ok=True)
             self.elements_df.to_pickle(STEP_1_OUTPUT_FILE)
-            logger.info(f"✓ DataFrame opgeslagen: {STEP_1_OUTPUT_FILE}")
+            print(f"[OK] DataFrame opgeslagen: {STEP_1_OUTPUT_FILE}")
         
         except Exception as e:
             logger.error(f"Fout bij opslaan DataFrame: {e}")

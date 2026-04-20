@@ -28,7 +28,7 @@ class IFCLoader:
         Returns:
             bool: True als geldig, False anders
         """
-        logger.info(f"Valideer IFC-bestand: {self.ifc_file_path}")
+        print(f"Valideer IFC-bestand: {self.ifc_file_path}")
         
         # Controleer bestandsexistentie
         if not self.ifc_file_path.exists():
@@ -44,7 +44,8 @@ class IFCLoader:
             self.ifc_file = ifcopenshell.open(str(self.ifc_file_path))
             self.is_valid = True
             self.file_info["bestandsgrootte_mb"] = self.ifc_file_path.stat().st_size / (1024 * 1024)
-            logger.info(f"✓ IFC-bestand succesfully ingeladen")
+            self.file_info["bestandsnaam"] = self.ifc_file_path.name
+            print(f"[OK] IFC-bestand succesvol ingeladen")
             return True
         except Exception as e:
             logger.error(f"Fout bij het inladen van IFC-bestand: {e}")

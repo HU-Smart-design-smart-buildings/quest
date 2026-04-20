@@ -27,14 +27,14 @@ class VersionDetector:
         Returns:
             tuple: (versie_string, IFCVersion enum)
         """
-        logger.info("Start IFC-versie detectie...")
+        print("Start IFC-versie detectie...")
         
         # Methode 1: Gebruik ifcopenshell's ingebouwde schema detectie
         version_via_schema = self._detect_via_schema()
         if version_via_schema:
             self.detected_version = version_via_schema
             self.version_enum = IFC_VERSION_MAP.get(version_via_schema)
-            logger.info(f"✓ IFC-versie gedetecteerd (via schema): {self.detected_version}")
+            print(f"[OK] IFC-versie gedetecteerd (via schema): {self.detected_version}")
             return self.detected_version, self.version_enum
         
         # Methode 2: Parse FILE_SCHEMA header
@@ -42,10 +42,10 @@ class VersionDetector:
         if version_via_header:
             self.detected_version = version_via_header
             self.version_enum = IFC_VERSION_MAP.get(version_via_header)
-            logger.info(f"✓ IFC-versie gedetecteerd (via header): {self.detected_version}")
+            logger.info(f"[OK] IFC-versie gedetecteerd (via header): {self.detected_version}")
             return self.detected_version, self.version_enum
         
-        logger.error("✗ Kon IFC-versie niet detecteren - standaard op 4.0")
+        logger.error("[X] Kon IFC-versie niet detecteren - standaard op 4.0")
         self.detected_version = "4.0"
         self.version_enum = IFCVersion.IFC_4_0
         return self.detected_version, self.version_enum
