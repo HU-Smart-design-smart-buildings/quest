@@ -13,6 +13,7 @@ class ComponentPropertiesProcessor:
         self.ifc_file = ifc_file
         self.validator = validator
         self.cache = cache
+        self.component_materials_cache = {}  # Cache voor element materials
     
     def get_component_materials(self, element):
         """
@@ -25,12 +26,16 @@ class ComponentPropertiesProcessor:
         
         try:
             element_type = element.is_a()
+            element_id = element.id()
             
             if element_type == 'IFCDOOR':
                 materials.extend(self._process_door_properties(element))
             
             elif element_type == 'IFCWINDOW':
                 materials.extend(self._process_window_properties(element))
+            
+            # FALLBACK: Als componenten zonder materiaal zijn, geef ze hetzelfde materiaal als andere componenten
+            materials = self._apply_material_fallback(element_id, materials)
         
         except Exception as e:
             logger.debug(f"Fout bij verwerking component properties (element {element.id()}): {e}")
@@ -145,3 +150,76 @@ class ComponentPropertiesProcessor:
         except Exception as e:
             logger.debug(f"Fout bij extractie component materiaal: {e}")
             return None
+    
+    def _apply_material_fallback(self, element_id, materials):
+        """
+        FALLBACK MECHANISME: Als componenten "Unknown" materiaal hebben,
+        geef ze hetzelfde materiaal als andere componenten van hetzelfde element.
+        
+        Voorbeeld:
+        - Door Lining: "Unknown" (geen material link gevonden)
+        - Door Panel: "Hout" (material link gevonden)
+        
+        Result:
+        - Door Lining: "Hout" (fallback naar panel)
+        - Door Panel: "Hout"
+        
+        Args:
+            element_id: ID van het element
+            materials: list van material dicts
+        
+        Returns:
+            lijst van material dicts met fallback toegepast
+        """
+        
+        # Stap 1: Vind alle unieke materialen die WEL geïdentificeerd zijn (niet "Unknown")
+        known_materials = [
+            m for m in materials 
+            if m.get('material_name') != 'Unknown'
+        ]
+        
+        # Als er geen bekende materialen zijn, retourneer originele lijst
+        if not known_materials:
+            return materials
+        
+        # Stap 2: Selecteer het EERSTE bekende materiaal als fallback
+        fallback_material_name = known_materials[0].get('material_name')
+        fallback_source = known_materials[0].get('source')
+        
+        logger.debug(
+            f"Fallback materiaal voor element {element_id}: '{fallback_material_name}' "
+            f"(uit {fallback_source})"
+        )
+        
+        # Stap 3: Vervang alle "Unknown" materialen met fallback
+        updated_materials = []
+        
+        for material in materials:
+            if material.get('material_name') == 'Unknown':
+                # Duplicate materiaal object
+                updated_material = material.copy()
+                
+                # Vervang met fallback
+                updated_material['material_name'] = fallback_material_name
+                
+                # Update notes om aan te geven dat dit een fallback is
+                original_notes = updated_material.get('notes', '')
+                updated_material['notes'] = (
+                    f"{original_notes} [FALLBACK: materiaal ingevuld van ander component: {fallback_material_name}]"
+                )
+                
+                # Flag dat dit een fallback is
+                updated_material['data_quality_flag'] = "FALLBACK_APPLIED"
+                
+                logger.debug(
+                    f"Element {element_id}: {original_notes} -> "
+                    f"'{fallback_material_name}' (fallback)"
+                )
+                
+                updated_materials.append(updated_material)
+            
+            else:
+                # Materiaal is al bekend, behoud het
+                updated_materials.append(material)
+        
+        return updated_materials
