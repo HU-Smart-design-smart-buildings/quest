@@ -28,88 +28,114 @@ class VersionStrategy:
         raise NotImplementedError
 
 
-class IFC23Strategy(VersionStrategy):
-    """Extractiestrategie voor IFC 2.3"""
+class IFC23Strategy:
+    """
+    Versiespecifieke strategie voor IFC 2.3
+    """
     
     def __init__(self, ifc_file):
-        super().__init__(ifc_file, IFCVersion.IFC_2_3)
-        print("IFC 2.3 strategie geladen")
+        self.ifc_file = ifc_file
     
     def get_building_elements(self):
-        """Retourneer dezelfde elementen als andere versies."""
-        return UNIVERSAL_BUILDING_ELEMENTS
-    
-    def extract_material_info(self, element):
-        """IFC 2.3 materialenextractie"""
-        # Implementatie volgt in volgende fases
-        pass
+        """
+        Haal alle bouwkundige elementen op (IFC 2.3 stijl).
+        
+        IFC 2.3 gebruikt PascalCase: IfcWall, IfcDoor, IfcWindow
+        IFC 4.x gebruikt UPPERCASE: IFCWALL, IFCDOOR, IFCWINDOW
+        """
+        # Map van IFC 2.3 naming -> genormaliseerd
+        ifc23_elements = {
+            'IfcWall',
+            'IfcDoor',
+            'IfcWindow',
+            'IfcBeam',
+            'IfcColumn',
+            'IfcSlab',
+            'IfcMember',
+            'IfcCurtainWall',
+            'IfcRoof',
+            'IfcBuildingElementProxy',
+            'IfcPlate',
+            'IfcCovering',
+            'IfcFooting',
+            'IfcStair',
+            'IfcBuildingElementPart',
+            'IfcElementAssembly',
+            'IfcDuctSegment',
+            'IfcPipeSegment',
+            'IfcRailing'
+        }
+        
+        return ifc23_elements
 
 
-class IFC40Strategy(VersionStrategy):
-    """Extractiestrategie voor IFC 4.0"""
+class IFC40Strategy:
+    """
+    Versiespecifieke strategie voor IFC 4.0
+    """
     
     def __init__(self, ifc_file):
-        super().__init__(ifc_file, IFCVersion.IFC_4_0)
-        print("IFC 4.0 strategie geladen")
+        self.ifc_file = ifc_file
     
     def get_building_elements(self):
-        """Retourneer dezelfde elementen als andere versies."""
-        return UNIVERSAL_BUILDING_ELEMENTS
-    
-    def extract_material_info(self, element):
-        """IFC 4.0 materialenextractie"""
-        pass
+        """
+        Haal alle bouwkundige elementen op (IFC 4.0 stijl).
+        
+        IFC 4.0+ gebruikt UPPERCASE: IFCWALL, IFCDOOR, IFCWINDOW
+        """
+        ifc40_elements = {
+            'IFCWALL',
+            'IFCDOOR',
+            'IFCWINDOW',
+            'IFCBEAM',
+            'IFCCOLUMN',
+            'IFCSLAB',
+            'IFCMEMBER',
+            'IFCCURTAINWALL',
+            'IFCROOF',
+            'IFCBUILDINGELEMENTPROXY',
+            'IFCPLATE',
+            'IFCCOVERING',
+            'IFCFOOTING',
+            'IFCSTAIR',
+            'IFCBUILDINGELEMENTPART',
+            'IFCELEMENTASSEMBLY',
+            'IFCDUCTSEGMENT',
+            'IFCPIPESEGMENT',
+            'IFCRAILING'
+        }
+        
+        return ifc40_elements
 
 
-class IFC41Strategy(VersionStrategy):
-    """Extractiestrategie voor IFC 4.1"""
-    
-    def __init__(self, ifc_file):
-        super().__init__(ifc_file, IFCVersion.IFC_4_1)
-        print("IFC 4.1 strategie geladen")
-    
-    def get_building_elements(self):
-        """Retourneer dezelfde elementen als andere versies."""
-        return UNIVERSAL_BUILDING_ELEMENTS
-    
-    def extract_material_info(self, element):
-        """IFC 4.1 materialenextractie"""
-        pass
+class IFC41Strategy(IFC40Strategy):
+    """
+    Versiespecifieke strategie voor IFC 4.1
+    (Dezelfde als 4.0)
+    """
+    pass
 
 
-class IFC43Strategy(VersionStrategy):
-    """Extractiestrategie voor IFC 4.3"""
-    
-    def __init__(self, ifc_file):
-        super().__init__(ifc_file, IFCVersion.IFC_4_3)
-        print("IFC 4.3 strategie geladen")
-    
-    def get_building_elements(self):
-        """Retourneer dezelfde elementen als andere versies."""
-        return UNIVERSAL_BUILDING_ELEMENTS
-    
-    def extract_material_info(self, element):
-        """IFC 4.3 materialenextractie"""
-        pass
+class IFC43Strategy(IFC40Strategy):
+    """
+    Versiespecifieke strategie voor IFC 4.3
+    (Dezelfde als 4.0)
+    """
+    pass
 
 
 def get_strategy(ifc_file, ifc_version_enum):
     """
-    Factory-functie om de juiste strategie te retourneren.
-    
-    Args:
-        ifc_file: ifcopenshell file object
-        ifc_version_enum: IFCVersion enum
-    
-    Returns:
-        VersionStrategy subclass instance
+    Retourneer de juiste strategie gebaseerd op IFC-versie.
     """
-    strategies = {
+    from config.config import IFCVersion
+    
+    strategy_map = {
         IFCVersion.IFC_2_3: IFC23Strategy,
         IFCVersion.IFC_4_0: IFC40Strategy,
         IFCVersion.IFC_4_1: IFC41Strategy,
         IFCVersion.IFC_4_3: IFC43Strategy,
     }
     
-    strategy_class = strategies.get(ifc_version_enum, IFC40Strategy)
+    strategy_class = strategy_map.get(ifc_version_enum, IFC40Strategy)
     return strategy_class(ifc_file)

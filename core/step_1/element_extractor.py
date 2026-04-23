@@ -159,3 +159,29 @@ class ElementExtractor:
         except Exception as e:
             logger.debug(f"Fout bij element-naamgeving: {e}")
             return f"{element_type}_{element_id}"
+
+    def extract_elements(self):
+        """
+        Haal alle bouwkundige elementen uit het IFC-bestand.
+        """
+        building_elements = self.strategy.get_building_elements()
+        
+        # BELANGRIJK: element.is_a() normaliseren naar uppercase
+        for element in self.ifc_file.by_type('IfcBuildingElement'):
+            try:
+                element_type = element.is_a()  # Kan "IfcWall" of "IFCWALL" zijn
+            
+                # Normaliseer naar uppercase voor consistency
+                element_type_normalized = element_type.upper() if element_type else None
+            
+                # Controleer tegen strategy
+                if element_type_normalized in building_elements or element_type in building_elements:
+                    # Process element...
+                    self.elements.append({
+                        'element_id': element.id(),
+                        'element_type': element_type_normalized,  # ← Store als uppercase
+                        # ... rest van data
+                    })
+            
+            except Exception as e:
+                logger.debug(f"Fout bij verwerking element: {e}")

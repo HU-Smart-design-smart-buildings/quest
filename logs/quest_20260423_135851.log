@@ -1,0 +1,9 @@
+2026-04-23 14:01:13,003 - core.step_1.element_extractor - WARNING - Kon elementen van type IFCDUCTSEGMENT niet ophalen: Entity with name 'IFCDUCTSEGMENT' not found in schema 'IFC2X3'
+2026-04-23 14:01:13,007 - core.step_1.element_extractor - WARNING - Kon elementen van type IFCPIPESEGMENT niet ophalen: Entity with name 'IFCPIPESEGMENT' not found in schema 'IFC2X3'
+2026-04-23 14:01:13,624 - core.step_2.step_2_material_collector - INFO - Kolommen in materials_data: ['element_id', 'element_type', 'material_name', 'material_type', 'layer_thickness', 'layer_index', 'constituent_fraction', 'layerset_name', 'data_quality_flag', 'source', 'notes']
+2026-04-23 14:01:13,626 - core.step_2.step_2_material_collector - INFO - Sample element_type waarden: <StringArray>
+['IFCDOOR', 'IFCWINDOW', 'IFCBEAM', 'IFCSLAB', 'IFCMEMBER']
+Length: 5, dtype: str
+2026-04-23 14:01:13,633 - core.step_2.step_2_material_collector - INFO - DataFrame shape: (1559, 11)
+2026-04-23 14:01:13,634 - core.step_2.step_2_material_collector - INFO - Unieke element types: ['IFCDOOR', 'IFCWINDOW', 'IFCBEAM', 'IFCSLAB', 'IFCMEMBER', 'IFCROOF', 'IFCBUILDINGELEMENTPROXY', 'IFCCOVERING']
+2026-04-23 14:01:13,634 - core.step_2.step_2_material_collector - INFO - Cache statistieken: {'cache_hits': 0, 'cache_misses': 0, 'total_requests': 0, 'hit_rate': 0, 'materials_cached': 0, 'layersets_cached': 0, 'constituents_cached': 0}

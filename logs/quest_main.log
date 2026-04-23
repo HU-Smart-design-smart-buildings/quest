@@ -249,3 +249,5 @@
 2026-04-20 14:04:52,079 - __main__ - INFO - Elementen met materiaalinfo: 3014
 2026-04-20 14:04:52,080 - __main__ - INFO - ============================================================
 
+2026-04-23 13:51:38,805 - __main__ - ERROR - Kon IFC-bestand niet inladen. Stoppen.
+2026-04-23 13:51:39,712 - __main__ - ERROR - Kon IFC-bestand niet inladen. Stoppen.

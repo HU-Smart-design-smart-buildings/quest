@@ -66,7 +66,7 @@ class ConstituentProcessor:
             
             material_data = {
                 'element_id': element.id(),
-                'element_type': element.is_a(),
+                'element_type': element.is_a().upper() if element.is_a() else 'Unknown',  # ← FIX
                 'material_name': material_name,
                 'material_type': 'IFCMATERIAL',
                 'layer_thickness': None,

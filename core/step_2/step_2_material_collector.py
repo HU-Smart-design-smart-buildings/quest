@@ -77,6 +77,7 @@ class Step2MaterialCollector:
         
         total_elements = len(self.elements_df)
         processed = 0
+        errors = 0
         
         for idx, row in self.elements_df.iterrows():
             try:
@@ -94,9 +95,12 @@ class Step2MaterialCollector:
             
             except Exception as e:
                 logger.debug(f"Fout bij verwerking element {element_id}: {e}")
+                errors += 1
                 continue
         
         print(f"✓ {processed} elementen verwerkt, {len(self.materials_data)} materiaalkoppelingen gevonden")
+        if errors > 0:
+            logger.warning(f"⚠ {errors} fouten tijdens verwerking")
     
     def _extract_materials_for_element(self, element):
         """
@@ -170,6 +174,10 @@ class Step2MaterialCollector:
             # Maak DataFrame
             df_materials = pd.DataFrame(self.materials_data)
             
+            # DEBUG: Log de huidige kolommen
+            logger.info(f"Kolommen in materials_data: {df_materials.columns.tolist()}")
+            logger.info(f"Sample element_type waarden: {df_materials['element_type'].unique()[:5] if 'element_type' in df_materials.columns else 'KOLOM NIET GEVONDEN'}")
+            
             # Zorg voor correcte kolom-volgorde
             column_order = [
                 'element_id', 'element_type', 'material_name', 'material_type',
@@ -181,6 +189,11 @@ class Step2MaterialCollector:
             for col in column_order:
                 if col not in df_materials.columns:
                     df_materials[col] = None
+                    logger.warning(f"Kolom '{col}' ontbrak, toegevoegd als None")
+            
+            # Zorg dat element_type het juiste format heeft (uppercase IFC types)
+            if 'element_type' in df_materials.columns:
+                df_materials['element_type'] = df_materials['element_type'].str.upper()
             
             df_materials = df_materials[column_order]
             
@@ -188,6 +201,8 @@ class Step2MaterialCollector:
             Path(STEP_2_OUTPUT_FILE).parent.mkdir(parents=True, exist_ok=True)
             df_materials.to_pickle(STEP_2_OUTPUT_FILE)
             print(f"✓ DataFrame opgeslagen: {STEP_2_OUTPUT_FILE}")
+            logger.info(f"DataFrame shape: {df_materials.shape}")
+            logger.info(f"Unieke element types: {df_materials['element_type'].unique().tolist()}")
             
             # Sla ook material definitions cache op
             self.cache.material_cache.update(self.cache.layerset_cache)
@@ -211,11 +226,22 @@ class Step2MaterialCollector:
         if len(self.materials_data) > 0:
             df = pd.DataFrame(self.materials_data)
             
+            # Zorg dat element_type uppercase is
+            if 'element_type' in df.columns:
+                df['element_type'] = df['element_type'].str.upper()
+            
             # Totalen per bron
             print(f"\nMateriaalkoppelingen per bron:")
-            for source in df['source'].unique():
+            for source in sorted(df['source'].unique()):
                 count = len(df[df['source'] == source])
                 print(f"  ├─ {source}: {count}")
+            
+            # Totalen per element type
+            print(f"\nMateriaalkoppelingen per element type:")
+            element_type_counts = df['element_type'].value_counts().sort_index()
+            for element_type, count in element_type_counts.items():
+                unique_elements_of_type = df[df['element_type'] == element_type]['element_id'].nunique()
+                print(f"  ├─ {element_type}: {count} koppelingen ({unique_elements_of_type} unieke elementen)")
             
             # Elementen met materialen
             unique_elements = df['element_id'].nunique()
@@ -225,7 +251,29 @@ class Step2MaterialCollector:
             print(f"\nData Quality Flags:")
             quality_counts = df['data_quality_flag'].value_counts()
             for flag, count in quality_counts.items():
-                print(f"  ├─ {flag}: {count}")
+                percentage = (count / len(df)) * 100
+                print(f"  ├─ {flag}: {count} ({percentage:.1f}%)")
+            
+            # Fallback statistieken
+            fallback_count = len(df[df['data_quality_flag'] == 'FALLBACK_APPLIED'])
+            if fallback_count > 0:
+                print(f"\n⚠ Fallback materialen toegepast: {fallback_count}")
+                fallback_df = df[df['data_quality_flag'] == 'FALLBACK_APPLIED']
+                print(f"  ├─ Per bron:")
+                for source in sorted(fallback_df['source'].unique()):
+                    count = len(fallback_df[fallback_df['source'] == source])
+                    print(f"  │  ├─ {source}: {count}")
+            
+            # Material names statistieken
+            print(f"\nMateriaalnamen gevonden:")
+            material_counts = df['material_name'].value_counts().head(10)
+            for material, count in material_counts.items():
+                print(f"  ├─ {material}: {count}")
+            
+            # Unknown materialen
+            unknown_count = len(df[df['material_name'] == 'Unknown'])
+            if unknown_count > 0:
+                print(f"\n⚠ Unknown materialen: {unknown_count}")
         
         else:
             print("⚠ Geen materiaalkoppelingen gevonden!")
@@ -236,8 +284,12 @@ class Step2MaterialCollector:
         """
         Retourneer Stap 2 resultaten.
         """
+        df_materials = pd.DataFrame(self.materials_data)
+        if 'element_type' in df_materials.columns:
+            df_materials['element_type'] = df_materials['element_type'].str.upper()
+        
         return {
-            'materials_df': pd.DataFrame(self.materials_data),
+            'materials_df': df_materials,
             'total_material_entries': len(self.materials_data),
             'unique_elements_with_materials': len(self.elements_df),
             'cache_stats': self.cache.get_cache_stats(),
