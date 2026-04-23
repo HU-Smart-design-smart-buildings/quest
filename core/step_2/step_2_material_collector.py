@@ -1,10 +1,9 @@
 import pandas as pd
 from pathlib import Path
 from config.config import (
-    STEP_2_OUTPUT_FILE, 
-    STEP_2_MATERIAL_DEFINITIONS_FILE,
-    STEP_2_REPORT_FILE,
-    UNIVERSAL_BUILDING_ELEMENTS
+    STEP_2_OUTPUT_FILE,
+    STEP_2_EXCEL_FILE,
+    STEP_2_REPORT_FILE
 )
 from core.logger import setup_logger
 from core.step_2.material_validator import MaterialValidator
@@ -13,125 +12,145 @@ from core.step_2.material_linker import MaterialLinker
 from core.step_2.layerset_processor import LayerSetProcessor
 from core.step_2.constituent_processor import ConstituentProcessor
 from core.step_2.component_properties import ComponentPropertiesProcessor
+from core.step_2.performance_optimizer import PerformanceOptimizer
+from core.step_2.data_joiner import DataJoiner
+from core.step_2.excel_exporter import ExcelExporter
 
 logger = setup_logger(__name__)
 
 class Step2MaterialCollector:
     """
     Orchestrator voor Stap 2: Materiaalkoppelingen ophalen.
+    
+    VERANDERINGEN TEN OPZICHTE VAN VORIGE VERSIE:
+    - DirectStrict afhankelijk van Stap 1 outputs (elements_df)
+    - Skip elementen zonder material_info EN zonder geometry
+    - Multi-threading voor performance
+    - Excel output met separate sheets per element_type
+    - Validatie tegen Stap 1
     """
     
-    def __init__(self, ifc_file, elements_df, ifc_version_enum):
+    def __init__(self, ifc_file, elements_df: pd.DataFrame, ifc_version_enum):
         self.ifc_file = ifc_file
         self.elements_df = elements_df
         self.ifc_version_enum = ifc_version_enum
         
-        # Initialiseer modules
+        # Modules
         self.validator = MaterialValidator()
         self.cache = MaterialLinkerCache(ifc_file)
         self.material_linker = MaterialLinker(ifc_file, self.validator, self.cache)
         self.layerset_processor = LayerSetProcessor(ifc_file, self.validator, self.cache)
         self.constituent_processor = ConstituentProcessor(ifc_file, self.validator, self.cache)
         self.component_processor = ComponentPropertiesProcessor(ifc_file, self.validator, self.cache)
+        self.optimizer = PerformanceOptimizer(max_workers=4)
+        self.joiner = DataJoiner()
+        self.exporter = ExcelExporter(STEP_2_EXCEL_FILE)
         
-        # Tussentijdse data
+        # Data
         self.materials_data = []
-        self.material_definitions = {}
     
-    def execute(self):
+    def execute(self) -> dict:
         """
         Voer complete Stap 2 uit.
-        
-        Returns:
-            dict met resultaten
         """
         print("\n" + "=" * 60)
         print("STAP 2: MATERIAALKOPPELINGEN OPHALEN")
         print("=" * 60 + "\n")
         
         try:
-            # Stap 2.1: Ophalen materiaalkoppelingen per element
-            self._extract_all_materials()
+            # 2.1: Filter elementen die we gaan verwerken
+            elements_to_process = self._filter_processable_elements()
             
-            # Stap 2.2: Opslaan resultaten
-            self._save_results()
+            # 2.2: Extract materialen via multi-threading
+            self._extract_materials_multithreaded(elements_to_process)
             
-            # Stap 2.3: Print statistieken
-            self._print_statistics()
+            # 2.3: Join Stap 1 + 2 data
+            merged_df = self._join_with_step1()
+            
+            # 2.4: Split per element_type en export naar Excel
+            self._export_to_excel(merged_df)
+            
+            # 2.5: Print statistieken
+            self._print_statistics(merged_df)
             
             print("\n" + "=" * 60)
             print("✓ STAP 2 SUCCESVOL VOLTOOID")
             print("=" * 60 + "\n")
             
-            return self._get_results()
+            return self._get_results(merged_df)
         
         except Exception as e:
             logger.error(f"Fout in Stap 2: {e}")
             raise
     
-    def _extract_all_materials(self):
+    def _filter_processable_elements(self) -> list:
         """
-        Haal alle materiaalkoppelingen op per element.
+        Filter elementen uit Stap 1 die we gaan verwerken.
+        
+        SKIP als:
+        - has_material_info = False EN geometric_representation = False
         """
-        print("Stap 2.1: Materiaalkoppelingen ophalen per element...")
+        print("Stap 2.1: Filteren verwerkbare elementen...")
         
-        total_elements = len(self.elements_df)
-        processed = 0
-        errors = 0
+        total = len(self.elements_df)
+        processable = self.elements_df[
+            (self.elements_df['has_material_info'] == True) | 
+            (self.elements_df['geometric_representation'] == True)
+        ]
         
-        for idx, row in self.elements_df.iterrows():
+        skipped = total - len(processable)
+        
+        print(f"  └─ {len(processable)} verwerkbaar, {skipped} overgeslagen")
+        logger.info(f"Gefilterd: {len(processable)} van {total} elementen, {skipped} skipped")
+        
+        return processable.to_dict('records')
+    
+    def _extract_materials_multithreaded(self, elements_to_process: list):
+        """
+        Extract materialen via multi-threading.
+        """
+        print("Stap 2.2: Extracting materialen (multi-threaded)...")
+        
+        # Processor functie voor parallelle verwerking
+        def process_single_element(element_record):
             try:
-                element_id = row['element_id']
-                
-                # Haal IFC element op
+                element_id = element_record['element_id']
                 ifc_element = self.ifc_file.by_id(element_id)
                 
-                # Haal alle materiaalkoppelingen op
-                self._extract_materials_for_element(ifc_element)
+                # Extract alle materiaaltypes
+                materials = []
                 
-                processed += 1
-                if processed % 100 == 0:
-                    print(f"  └─ {processed}/{total_elements} elementen verwerkt...")
+                # 1. Direct materials
+                materials.extend(self.material_linker.get_direct_materials(ifc_element))
+                
+                # 2. Layerset materials
+                materials.extend(self._get_layerset_materials(ifc_element))
+                
+                # 3. Constituent materials
+                materials.extend(self._get_constituent_materials(ifc_element))
+                
+                # 4. Component materials
+                materials.extend(self.component_processor.get_component_materials(ifc_element))
+                
+                return materials if materials else []
             
             except Exception as e:
-                logger.debug(f"Fout bij verwerking element {element_id}: {e}")
-                errors += 1
-                continue
+                logger.debug(f"Fout bij element {element_record.get('element_id')}: {e}")
+                return []
         
-        print(f"✓ {processed} elementen verwerkt, {len(self.materials_data)} materiaalkoppelingen gevonden")
-        if errors > 0:
-            logger.warning(f"⚠ {errors} fouten tijdens verwerking")
-    
-    def _extract_materials_for_element(self, element):
-        """
-        Haal alle materiaalkoppelingen voor één element op.
-        """
-        try:
-            # 1. Directe materialen
-            direct_materials = self.material_linker.get_direct_materials(element)
-            self.materials_data.extend(direct_materials)
-            
-            # 2. Gelaagde materialen (IFCMATERIALLAYERSET)
-            layerset_materials = self._get_layerset_materials(element)
-            self.materials_data.extend(layerset_materials)
-            
-            # 3. Samengestelde materialen (IFCMATERIALCONSTITUENTSET)
-            constituent_materials = self._get_constituent_materials(element)
-            self.materials_data.extend(constituent_materials)
-            
-            # 4. Deur/Raam-componenten
-            component_materials = self.component_processor.get_component_materials(element)
-            self.materials_data.extend(component_materials)
+        # Proces via multi-threading
+        self.materials_data = self.optimizer.process_elements_batch(
+            elements_to_process,
+            process_single_element,
+            batch_size=500
+        )
         
-        except Exception as e:
-            logger.debug(f"Fout bij extractie materialen voor element: {e}")
+        print(f"✓ {len(self.materials_data)} materiaalkoppelingen gevonden")
+        logger.info(f"Totaal materiaalkoppelingen: {len(self.materials_data)}")
     
     def _get_layerset_materials(self, element):
-        """
-        Haal gelaagde materialen op.
-        """
+        """Haal layerset materialen op."""
         materials = []
-        
         try:
             if hasattr(element, 'HasAssociations'):
                 for rel in element.HasAssociations:
@@ -141,16 +160,12 @@ class Step2MaterialCollector:
                             if material_obj.is_a('IFCMATERIALLAYERSET'):
                                 materials.extend(self.layerset_processor.process_layerset(element, material_obj))
         except Exception as e:
-            logger.debug(f"Fout bij ophalen layerset materialen: {e}")
-        
+            logger.debug(f"Fout bij layerset: {e}")
         return materials
     
     def _get_constituent_materials(self, element):
-        """
-        Haal samengestelde materialen op.
-        """
+        """Haal constituent materialen op."""
         materials = []
-        
         try:
             if hasattr(element, 'HasAssociations'):
                 for rel in element.HasAssociations:
@@ -160,138 +175,80 @@ class Step2MaterialCollector:
                             if material_obj.is_a('IFCMATERIALCONSTITUENTSET'):
                                 materials.extend(self.constituent_processor.process_constituent_set(element, material_obj))
         except Exception as e:
-            logger.debug(f"Fout bij ophalen constituent materialen: {e}")
-        
+            logger.debug(f"Fout bij constituent: {e}")
         return materials
     
-    def _save_results(self):
+    def _join_with_step1(self) -> pd.DataFrame:
         """
-        Sla resultaten op.
+        Join Stap 2 materialen met Stap 1 elementen.
         """
-        print("Stap 2.2: Resultaten opslaan...")
+        print("Stap 2.3: Join Stap 1 + 2 data...")
         
-        try:
-            # Maak DataFrame
-            df_materials = pd.DataFrame(self.materials_data)
-            
-            # DEBUG: Log de huidige kolommen
-            logger.info(f"Kolommen in materials_data: {df_materials.columns.tolist()}")
-            logger.info(f"Sample element_type waarden: {df_materials['element_type'].unique()[:5] if 'element_type' in df_materials.columns else 'KOLOM NIET GEVONDEN'}")
-            
-            # Zorg voor correcte kolom-volgorde
-            column_order = [
-                'element_id', 'element_type', 'material_name', 'material_type',
-                'layer_thickness', 'layer_index', 'constituent_fraction', 
-                'layerset_name', 'data_quality_flag', 'source', 'notes'
-            ]
-            
-            # Voeg ontbrekende kolommen toe (mag niet voorkomen, maar voor zekerheid)
-            for col in column_order:
-                if col not in df_materials.columns:
-                    df_materials[col] = None
-                    logger.warning(f"Kolom '{col}' ontbrak, toegevoegd als None")
-            
-            # Zorg dat element_type het juiste format heeft (uppercase IFC types)
-            if 'element_type' in df_materials.columns:
-                df_materials['element_type'] = df_materials['element_type'].str.upper()
-            
-            df_materials = df_materials[column_order]
-            
-            # Sla als pickle op
-            Path(STEP_2_OUTPUT_FILE).parent.mkdir(parents=True, exist_ok=True)
-            df_materials.to_pickle(STEP_2_OUTPUT_FILE)
-            print(f"✓ DataFrame opgeslagen: {STEP_2_OUTPUT_FILE}")
-            logger.info(f"DataFrame shape: {df_materials.shape}")
-            logger.info(f"Unieke element types: {df_materials['element_type'].unique().tolist()}")
-            
-            # Sla ook material definitions cache op
-            self.cache.material_cache.update(self.cache.layerset_cache)
-            self.cache.material_cache.update(self.cache.constituent_cache)
-            
-            # Opslaan cache stats voor rapportage
-            cache_stats = self.cache.get_cache_stats()
-            logger.info(f"Cache statistieken: {cache_stats}")
+        df_materials = pd.DataFrame(self.materials_data)
+        merged_df = self.joiner.join_step1_and_materials(self.elements_df, df_materials)
         
-        except Exception as e:
-            logger.error(f"Fout bij opslaan resultaten: {e}")
-            raise
+        print(f"✓ {len(merged_df)} rijen na join")
+        return merged_df
     
-    def _print_statistics(self):
+    def _export_to_excel(self, merged_df: pd.DataFrame):
+        """
+        Exporteer naar Excel met separate sheets per element_type.
+        """
+        print("Stap 2.4: Exporteren naar Excel...")
+        
+        dfs_by_type = self.joiner.split_by_element_type(merged_df)
+        validation_stats = self.joiner.get_validation_stats(merged_df)
+        
+        success = self.exporter.export_to_excel(dfs_by_type, validation_stats)
+        
+        if success:
+            print(f"✓ Excel bestand opgeslagen: {STEP_2_EXCEL_FILE}")
+            logger.info(f"Excel export succesvol: {len(dfs_by_type)} sheets")
+        else:
+            logger.warning("Excel export had problemen")
+    
+    def _print_statistics(self, merged_df: pd.DataFrame):
         """
         Print statistieken.
         """
-        print("\nStap 2.3: Statistieken")
+        print("Stap 2.5: Statistieken")
         print("=" * 60)
         
-        if len(self.materials_data) > 0:
-            df = pd.DataFrame(self.materials_data)
-            
-            # Zorg dat element_type uppercase is
-            if 'element_type' in df.columns:
-                df['element_type'] = df['element_type'].str.upper()
-            
-            # Totalen per bron
-            print(f"\nMateriaalkoppelingen per bron:")
-            for source in sorted(df['source'].unique()):
-                count = len(df[df['source'] == source])
-                print(f"  ├─ {source}: {count}")
-            
-            # Totalen per element type
-            print(f"\nMateriaalkoppelingen per element type:")
-            element_type_counts = df['element_type'].value_counts().sort_index()
-            for element_type, count in element_type_counts.items():
-                unique_elements_of_type = df[df['element_type'] == element_type]['element_id'].nunique()
-                print(f"  ├─ {element_type}: {count} koppelingen ({unique_elements_of_type} unieke elementen)")
-            
-            # Elementen met materialen
-            unique_elements = df['element_id'].nunique()
-            print(f"\nUnieke elementen met materialen: {unique_elements}")
-            
-            # Data quality
-            print(f"\nData Quality Flags:")
-            quality_counts = df['data_quality_flag'].value_counts()
-            for flag, count in quality_counts.items():
-                percentage = (count / len(df)) * 100
-                print(f"  ├─ {flag}: {count} ({percentage:.1f}%)")
-            
-            # Fallback statistieken
-            fallback_count = len(df[df['data_quality_flag'] == 'FALLBACK_APPLIED'])
-            if fallback_count > 0:
-                print(f"\n⚠ Fallback materialen toegepast: {fallback_count}")
-                fallback_df = df[df['data_quality_flag'] == 'FALLBACK_APPLIED']
-                print(f"  ├─ Per bron:")
-                for source in sorted(fallback_df['source'].unique()):
-                    count = len(fallback_df[fallback_df['source'] == source])
-                    print(f"  │  ├─ {source}: {count}")
-            
-            # Material names statistieken
-            print(f"\nMateriaalnamen gevonden:")
-            material_counts = df['material_name'].value_counts().head(10)
-            for material, count in material_counts.items():
-                print(f"  ├─ {material}: {count}")
-            
-            # Unknown materialen
-            unknown_count = len(df[df['material_name'] == 'Unknown'])
-            if unknown_count > 0:
-                print(f"\n⚠ Unknown materialen: {unknown_count}")
+        validation_stats = self.joiner.get_validation_stats(merged_df)
         
-        else:
-            print("⚠ Geen materiaalkoppelingen gevonden!")
+        print(f"\nAlgemeen:")
+        print(f"  ├─ Totaal rijen: {validation_stats['total_rows']}")
+        print(f"  ├─ Unieke elementen: {validation_stats['unique_elements']}")
+        print(f"  ├─ Met materiaal: {validation_stats['elements_with_material']}")
+        print(f"  ├─ Zonder materiaal: {validation_stats['elements_without_material']}")
+        print(f"  └─ Coverage: {validation_stats['material_coverage_percentage']:.1f}%")
+        
+        # Per element type
+        print(f"\nPer element type:")
+        for element_type in sorted(merged_df['element_type'].unique()):
+            type_df = merged_df[merged_df['element_type'] == element_type]
+            with_material = len(type_df[type_df['material_name'] != 'Unknown'])
+            print(f"  ├─ {element_type}: {len(type_df)} rijen ({with_material} met materiaal)")
+        
+        # Per source
+        print(f"\nPer bron:")
+        for source in sorted(merged_df[merged_df['source'] != 'Unknown']['source'].unique()):
+            count = len(merged_df[merged_df['source'] == source])
+            print(f"  ├─ {source}: {count}")
         
         print("=" * 60)
     
-    def _get_results(self):
+    def _get_results(self, merged_df: pd.DataFrame) -> dict:
         """
-        Retourneer Stap 2 resultaten.
+        Retourneer Stap 2 results.
         """
-        df_materials = pd.DataFrame(self.materials_data)
-        if 'element_type' in df_materials.columns:
-            df_materials['element_type'] = df_materials['element_type'].str.upper()
+        validation_stats = self.joiner.get_validation_stats(merged_df)
         
         return {
-            'materials_df': df_materials,
+            'materials_df': merged_df,
             'total_material_entries': len(self.materials_data),
-            'unique_elements_with_materials': len(self.elements_df),
-            'cache_stats': self.cache.get_cache_stats(),
+            'unique_elements_processed': merged_df['element_id'].nunique(),
+            'validation_stats': validation_stats,
+            'excel_output': STEP_2_EXCEL_FILE,
             'status': 'OK'
         }

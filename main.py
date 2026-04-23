@@ -12,6 +12,8 @@ from core.step_1.step_1_element_collector import Step1ElementCollector
 # Imports van Stap 2
 from core.step_2.step_2_material_collector import Step2MaterialCollector
 
+from core.step_3.step_3_material_type_resolver import Step3MaterialTypeResolver
+
 from core.logger import setup_logger
 
 logger = setup_logger(__name__, "quest_main.log")
@@ -85,6 +87,8 @@ def execute_step_1(step_0_results):
 def execute_step_2(step_0_results, step_1_results):
     """
     STAP 2: Materiaalkoppelingen ophalen.
+    
+    VERBETERD: Nu met integratie van Stap 1 en multi-threading!
     """
     if step_0_results is None or step_1_results is None:
         logger.error("Stap 0 of 1 faalde. Kan Stap 2 niet uitvoeren.")
@@ -92,13 +96,32 @@ def execute_step_2(step_0_results, step_1_results):
     
     ifc_file = step_0_results["ifc_file"]
     ifc_version_enum = step_0_results["ifc_version_enum"]
-    elements_df = step_1_results["elements_df"]
+    elements_df = step_1_results["elements_df"]  # ← Van Stap 1!
     
     # Voer Stap 2 uit
     collector = Step2MaterialCollector(ifc_file, elements_df, ifc_version_enum)
     step_2_results = collector.execute()
     
     return step_2_results
+
+
+def execute_step_3(step_0_results, step_2_results):
+    """
+    STAP 3: Materiaaltype verwerken (Fallback Resolution).
+    
+    Probeer materialen op te halen voor elementen met 'Unknown' materiaal
+    via TYPE, PropertySet, en Style fallbacks.
+    """
+    if step_0_results is None or step_2_results is None:
+        logger.error("Stap 0 of 2 faalde. Kan Stap 3 niet uitvoeren.")
+        return None
+    
+    ifc_file = step_0_results["ifc_file"]
+    
+    resolver = Step3MaterialTypeResolver(ifc_file, step_2_results)
+    step_3_results = resolver.execute()
+    
+    return step_3_results
 
 
 def main(ifc_file_path):
@@ -125,11 +148,17 @@ def main(ifc_file_path):
         if not step_2_results:
             return False
         
+        # STAP 3
+        step_3_results = execute_step_3(step_0_results, step_2_results)
+        if not step_3_results:
+            return False
+        
         print("\n" + "=" * 60)
         print("[OK] ALLE STAPPEN SUCCESVOL VOLTOOID")
         print("=" * 60)
         print(f"Totaal elementen verzameld (Stap 1): {step_1_results['total_elements']}")
         print(f"Totaal materiaalkoppelingen (Stap 2): {step_2_results['total_material_entries']}")
+        print(f"Totaal materiaaltypen (Stap 3): {step_3_results['total_material_types']}")
         print("=" * 60 + "\n")
         
         return True
