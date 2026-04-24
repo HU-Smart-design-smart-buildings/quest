@@ -9,6 +9,9 @@ from core.step_0.version_strategies import get_strategy
 # Imports van Stap 1
 from core.step_1.step_1_element_collector import Step1ElementCollector
 
+# Imports van Stap 2
+from core.step_2.step_2_collector import Step2Collector
+
 from core.logger import setup_logger
 
 logger = setup_logger(__name__, "quest_main.log")
@@ -76,6 +79,19 @@ def execute_step_1(step_0_results):
         logger.error(f"Fout in Stap 1: {e}", exc_info=True)
         raise
 
+def execute_step_2(step_0_results, step_1_results):
+    """STAP 2: Materiaal eigenschappen ophalen."""
+    try:
+        ifc_file = step_0_results['ifc_file']
+        elements_df = step_1_results['elements_df']
+        
+        collector = Step2Collector(ifc_file, elements_df)
+        return collector.execute()
+    
+    except Exception as e:
+        logger.error(f"Fout in Stap 2: {e}", exc_info=True)
+        raise
+
 def main(ifc_file_path):
     """
     Hoofdfunctie: Voer alle stappen uit.
@@ -93,18 +109,23 @@ def main(ifc_file_path):
         # Stap 1
         step_1_results = execute_step_1(step_0_results)
         
+        # Stap 2
+        step_2_results = execute_step_2(step_0_results, step_1_results)
+        
         print("\n" + "═" * 70)
         print("SAMENVATTING")
         print("═" * 70)
         print(f"[OK] Stap 0: Bestand ingeladen en versie gedetecteerd")
         print(f"[OK] Stap 1: {step_1_results['total_elements']:,} elementen verzameld")
-        print(f"  ├─ Met materiaal info: {step_1_results['elements_with_material']:,}")
-        print(f"  └─ Output: {step_1_results.get('status')}")
+        print(f"[OK] Stap 2: {step_2_results['total_rows']:,} materiaal-rijen verwerkt")
+        print(f"  -- Unieke elementen: {step_2_results['unique_elements']:,}")
+        print(f"  -- Met materiaal: {step_2_results['elements_with_material']:,}")
         print("═" * 70 + "\n")
         
         return {
             'step_0': step_0_results,
             'step_1': step_1_results,
+            'step_2': step_2_results,
             'status': 'OK'
         }
     

@@ -49,14 +49,6 @@ LOG_LEVEL = "INFO"
 STEP_1_OUTPUT_FILE = OUTPUT_DIR / "step_1_elements.pkl"
 STEP_1_REPORT_FILE = OUTPUT_DIR / "step_1_completeness_report.json"
 
-# STAP 2 OUTPUT FILES
-STEP_2_OUTPUT_FILE = os.path.join(OUTPUT_DIR, 'step_2_materials.pkl')
-STEP_2_EXCEL_FILE = os.path.join(OUTPUT_DIR, 'step_2_materials_enriched.xlsx')
-STEP_2_REPORT_FILE = os.path.join(OUTPUT_DIR, 'step_2_report.json')
-
-# STAP 3 OUTPUT FILES (NIEUW)
-STEP_3_EXCEL_FILE = os.path.join(OUTPUT_DIR, 'step_3_materials_resolved.xlsx')
-
 # Data Quality Flags
 DATA_QUALITY_OK = "OK"
 DATA_QUALITY_MISSING = "MISSING"
@@ -66,3 +58,6 @@ MATERIAL_SOURCE_DIRECT = "DIRECT"
 MATERIAL_SOURCE_LAYERSET = "LAYERSET"
 MATERIAL_SOURCE_CONSTITUENT = "CONSTITUENT"
 MATERIAL_SOURCE_COMPONENT = "COMPONENT"
+
+# STAP 2
+STEP_2_OUTPUT_FILE = OUTPUT_DIR / "step_2_materials.csv"
