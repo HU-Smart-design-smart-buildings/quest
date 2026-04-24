@@ -256,3 +256,51 @@
 2026-04-23 16:42:42,713 - __main__ - ERROR - Kritieke fout: ('type_naam', 'parent_element_id', 'type_link')
 2026-04-24 10:57:05,067 - __main__ - ERROR - Kritieke fout: 'total_material_entries'
 2026-04-24 11:20:14,448 - __main__ - ERROR - Kritieke fout: 'total_material_entries'
+2026-04-24 15:12:20,182 - __main__ - ERROR - Fout in Stap 2: [Errno 13] Permission denied: 'C:\\Users\\cathy\\Downloads\\quest\\output\\step_2_materials.xlsx'
+Traceback (most recent call last):
+  File "C:\Users\cathy\Downloads\quest\main.py", line 89, in execute_step_2
+    return collector.execute()
+           ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\cathy\Downloads\quest\core\step_2\step_2_collector.py", line 68, in execute
+    self._save_results(materials_df)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\cathy\Downloads\quest\core\step_2\step_2_collector.py", line 357, in _save_results
+    df.to_excel(excel_file, index=False, sheet_name='Materials')
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cathy\Downloads\quest\.venv\Lib\site-packages\pandas\core\generic.py", line 2312, in to_excel
+    formatter.write(
+    ~~~~~~~~~~~~~~~^
+        excel_writer,
+        ^^^^^^^^^^^^^
+    ...<6 lines>...
+        engine_kwargs=engine_kwargs,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\cathy\Downloads\quest\.venv\Lib\site-packages\pandas\io\formats\excel.py", line 1003, in write
+    writer = ExcelWriter(
+        writer,
+    ...<2 lines>...
+        engine_kwargs=engine_kwargs,
+    )
+  File "C:\Users\cathy\Downloads\quest\.venv\Lib\site-packages\pandas\io\excel\_openpyxl.py", line 62, in __init__
+    super().__init__(
+    ~~~~~~~~~~~~~~~~^
+        path,
+        ^^^^^
+    ...<3 lines>...
+        engine_kwargs=engine_kwargs,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\cathy\Downloads\quest\.venv\Lib\site-packages\pandas\io\excel\_base.py", line 1281, in __init__
+    self._handles = get_handle(
+                    ~~~~~~~~~~^
+        path, mode, storage_options=storage_options, is_text=False
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\cathy\Downloads\quest\.venv\Lib\site-packages\pandas\io\common.py", line 935, in get_handle
+    handle = open(handle, ioargs.mode)
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\cathy\\Downloads\\quest\\output\\step_2_materials.xlsx'
+2026-04-24 15:12:20,186 - __main__ - ERROR - Kritieke fout: [Errno 13] Permission denied: 'C:\\Users\\cathy\\Downloads\\quest\\output\\step_2_materials.xlsx'
