@@ -1,0 +1,8 @@
+2026-04-24 11:20:02,736 - core.step_2.step_2_material_collector - INFO - IFC scan complete: 2845 elementen
+2026-04-24 11:20:02,756 - core.step_2.performance_optimizer - INFO - Start batch verwerking: 2845 elementen, batch_size=250
+2026-04-24 11:20:06,146 - core.step_2.performance_optimizer - INFO - Batch verwerking voltooid: 2845 geslaagd, 0 fouten
+2026-04-24 11:20:06,146 - core.step_2.step_2_material_collector - INFO - Complete data extraction: 2845 elementen
+2026-04-24 11:20:11,612 - core.step_2.step_2_material_collector - INFO - Excel export succesful
+2026-04-24 11:20:11,677 - core.step_3.step_3_material_type_resolver - INFO - Materialen geladen: 2931 rijen
+2026-04-24 11:20:12,330 - core.step_3.step_3_material_type_resolver - INFO - DataFrame bijgewerkt met resolution info
+2026-04-24 11:20:14,442 - core.step_3.step_3_material_type_resolver - INFO - Excel geëxporteerd: C:\Users\cathy\Downloads\quest\output\step_3_materials_resolved.xlsx

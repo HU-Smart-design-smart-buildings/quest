@@ -1,0 +1,190 @@
+2026-04-23 16:35:20,228 - core.step_2.step_2_material_collector - INFO - Gefilterd: 3849 van 3922 elementen, 73 skipped
+2026-04-23 16:35:20,243 - core.step_2.performance_optimizer - INFO - Start batch verwerking: 3849 elementen, batch_size=500
+2026-04-23 16:35:20,528 - core.step_2.constituent_processor - WARNING - Element 2842915: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,542 - core.step_2.constituent_processor - WARNING - Element 2857270: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,544 - core.step_2.constituent_processor - WARNING - Element 6327763: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,569 - core.step_2.constituent_processor - WARNING - Element 4949942: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,590 - core.step_2.constituent_processor - WARNING - Element 2866624: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,617 - core.step_2.constituent_processor - WARNING - Element 18194192: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,617 - core.step_2.constituent_processor - WARNING - Element 6329313: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,618 - core.step_2.constituent_processor - WARNING - Element 2897905: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,618 - core.step_2.constituent_processor - WARNING - Element 4951381: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,618 - core.step_2.constituent_processor - WARNING - Element 6330212: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,618 - core.step_2.constituent_processor - WARNING - Element 18194211: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,621 - core.step_2.constituent_processor - WARNING - Element 4951757: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,619 - core.step_2.constituent_processor - WARNING - Element 2912200: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,623 - core.step_2.constituent_processor - WARNING - Element 18217355: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,621 - core.step_2.constituent_processor - WARNING - Element 6331760: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,627 - core.step_2.constituent_processor - WARNING - Element 6351150: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,627 - core.step_2.constituent_processor - WARNING - Element 2921508: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,628 - core.step_2.constituent_processor - WARNING - Element 6371581: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,632 - core.step_2.constituent_processor - WARNING - Element 4523017: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,627 - core.step_2.constituent_processor - WARNING - Element 18217369: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,627 - core.step_2.constituent_processor - WARNING - Element 6331830: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,634 - core.step_2.constituent_processor - WARNING - Element 6387122: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,634 - core.step_2.constituent_processor - WARNING - Element 4525772: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,635 - core.step_2.constituent_processor - WARNING - Element 18228693: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,636 - core.step_2.constituent_processor - WARNING - Element 6331900: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,636 - core.step_2.constituent_processor - WARNING - Element 6387275: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,638 - core.step_2.constituent_processor - WARNING - Element 4531082: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,638 - core.step_2.constituent_processor - WARNING - Element 18228707: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,638 - core.step_2.constituent_processor - WARNING - Element 6331926: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,639 - core.step_2.constituent_processor - WARNING - Element 6399029: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,642 - core.step_2.constituent_processor - WARNING - Element 4672296: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,642 - core.step_2.constituent_processor - WARNING - Element 18228742: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,642 - core.step_2.constituent_processor - WARNING - Element 6331952: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,642 - core.step_2.constituent_processor - WARNING - Element 6399184: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,646 - core.step_2.constituent_processor - WARNING - Element 4805788: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,646 - core.step_2.constituent_processor - WARNING - Element 18228756: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,646 - core.step_2.constituent_processor - WARNING - Element 6371260: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,650 - core.step_2.constituent_processor - WARNING - Element 6416058: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,651 - core.step_2.constituent_processor - WARNING - Element 4805895: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,652 - core.step_2.constituent_processor - WARNING - Element 19154498: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,653 - core.step_2.constituent_processor - WARNING - Element 6371286: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,654 - core.step_2.constituent_processor - WARNING - Element 6416671: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,655 - core.step_2.constituent_processor - WARNING - Element 4806262: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,656 - core.step_2.constituent_processor - WARNING - Element 19161722: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,656 - core.step_2.constituent_processor - WARNING - Element 6371312: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,659 - core.step_2.constituent_processor - WARNING - Element 6417818: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,659 - core.step_2.constituent_processor - WARNING - Element 4806490: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,660 - core.step_2.constituent_processor - WARNING - Element 19162507: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,660 - core.step_2.constituent_processor - WARNING - Element 6371338: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,663 - core.step_2.constituent_processor - WARNING - Element 6421745: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,666 - core.step_2.constituent_processor - WARNING - Element 4808233: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,666 - core.step_2.constituent_processor - WARNING - Element 19163155: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,666 - core.step_2.constituent_processor - WARNING - Element 15740685: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,667 - core.step_2.constituent_processor - WARNING - Element 6421811: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,667 - core.step_2.constituent_processor - WARNING - Element 4808470: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,671 - core.step_2.constituent_processor - WARNING - Element 19230909: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,672 - core.step_2.constituent_processor - WARNING - Element 15741584: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,672 - core.step_2.constituent_processor - WARNING - Element 6421826: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,676 - core.step_2.constituent_processor - WARNING - Element 19230923: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,676 - core.step_2.constituent_processor - WARNING - Element 15744315: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,677 - core.step_2.constituent_processor - WARNING - Element 6421840: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,677 - core.step_2.constituent_processor - WARNING - Element 19287175: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,678 - core.step_2.constituent_processor - WARNING - Element 15744341: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,678 - core.step_2.constituent_processor - WARNING - Element 6421899: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,678 - core.step_2.constituent_processor - WARNING - Element 19287237: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,678 - core.step_2.constituent_processor - WARNING - Element 15744367: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,679 - core.step_2.constituent_processor - WARNING - Element 6421915: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,679 - core.step_2.constituent_processor - WARNING - Element 19287298: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,679 - core.step_2.constituent_processor - WARNING - Element 15744393: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,680 - core.step_2.constituent_processor - WARNING - Element 15734267: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,680 - core.step_2.constituent_processor - WARNING - Element 19287359: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,680 - core.step_2.constituent_processor - WARNING - Element 15747515: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,680 - core.step_2.constituent_processor - WARNING - Element 15734527: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,681 - core.step_2.constituent_processor - WARNING - Element 19287421: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,681 - core.step_2.constituent_processor - WARNING - Element 15747541: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,681 - core.step_2.constituent_processor - WARNING - Element 15735063: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,681 - core.step_2.constituent_processor - WARNING - Element 19287437: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,682 - core.step_2.constituent_processor - WARNING - Element 15747567: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,682 - core.step_2.constituent_processor - WARNING - Element 15743799: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,682 - core.step_2.constituent_processor - WARNING - Element 19287497: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,683 - core.step_2.constituent_processor - WARNING - Element 15747593: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,683 - core.step_2.constituent_processor - WARNING - Element 15745819: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,683 - core.step_2.constituent_processor - WARNING - Element 19287559: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,684 - core.step_2.constituent_processor - WARNING - Element 15748112: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,684 - core.step_2.constituent_processor - WARNING - Element 15747706: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,684 - core.step_2.constituent_processor - WARNING - Element 19287620: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,685 - core.step_2.constituent_processor - WARNING - Element 15762461: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,685 - core.step_2.constituent_processor - WARNING - Element 15747935: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,685 - core.step_2.constituent_processor - WARNING - Element 19287680: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,685 - core.step_2.constituent_processor - WARNING - Element 15762771: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,686 - core.step_2.constituent_processor - WARNING - Element 15771326: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,686 - core.step_2.constituent_processor - WARNING - Element 19287741: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,686 - core.step_2.constituent_processor - WARNING - Element 15762319: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,687 - core.step_2.constituent_processor - WARNING - Element 15772225: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,696 - core.step_2.constituent_processor - WARNING - Element 19344977: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,696 - core.step_2.constituent_processor - WARNING - Element 15762575: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,697 - core.step_2.constituent_processor - WARNING - Element 15762594: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,697 - core.step_2.constituent_processor - WARNING - Element 19345395: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,697 - core.step_2.constituent_processor - WARNING - Element 15774974: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,698 - core.step_2.constituent_processor - WARNING - Element 15763593: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,698 - core.step_2.constituent_processor - WARNING - Element 19345805: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,699 - core.step_2.constituent_processor - WARNING - Element 19346215: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,699 - core.step_2.constituent_processor - WARNING - Element 15763791: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,698 - core.step_2.constituent_processor - WARNING - Element 15775000: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,699 - core.step_2.constituent_processor - WARNING - Element 19346625: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,699 - core.step_2.constituent_processor - WARNING - Element 15765632: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,700 - core.step_2.constituent_processor - WARNING - Element 15797733: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,700 - core.step_2.constituent_processor - WARNING - Element 19347028: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,700 - core.step_2.constituent_processor - WARNING - Element 15774201: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,701 - core.step_2.constituent_processor - WARNING - Element 15774399: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,701 - core.step_2.constituent_processor - WARNING - Element 15800253: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,701 - core.step_2.constituent_processor - WARNING - Element 15774629: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,704 - core.step_2.constituent_processor - WARNING - Element 15780035: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,701 - core.step_2.constituent_processor - WARNING - Element 15801801: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,704 - core.step_2.constituent_processor - WARNING - Element 15795333: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,704 - core.step_2.constituent_processor - WARNING - Element 15801827: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,704 - core.step_2.constituent_processor - WARNING - Element 15795483: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,705 - core.step_2.constituent_processor - WARNING - Element 15802251: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,706 - core.step_2.constituent_processor - WARNING - Element 15802404: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,705 - core.step_2.constituent_processor - WARNING - Element 15795524: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,706 - core.step_2.constituent_processor - WARNING - Element 15802430: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,706 - core.step_2.constituent_processor - WARNING - Element 15802108: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,707 - core.step_2.constituent_processor - WARNING - Element 15802703: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,707 - core.step_2.constituent_processor - WARNING - Element 15802332: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,707 - core.step_2.constituent_processor - WARNING - Element 15802729: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,717 - core.step_2.constituent_processor - WARNING - Element 17210688: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,717 - core.step_2.constituent_processor - WARNING - Element 15802755: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,721 - core.step_2.constituent_processor - WARNING - Element 17242477: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,722 - core.step_2.constituent_processor - WARNING - Element 18181209: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,722 - core.step_2.constituent_processor - WARNING - Element 17267610: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,723 - core.step_2.constituent_processor - WARNING - Element 19163051: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,723 - core.step_2.constituent_processor - WARNING - Element 17267647: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,724 - core.step_2.constituent_processor - WARNING - Element 19163077: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,724 - core.step_2.constituent_processor - WARNING - Element 17267683: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,724 - core.step_2.constituent_processor - WARNING - Element 19163103: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,725 - core.step_2.constituent_processor - WARNING - Element 19163129: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,724 - core.step_2.constituent_processor - WARNING - Element 17267719: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,725 - core.step_2.constituent_processor - WARNING - Element 19242157: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,725 - core.step_2.constituent_processor - WARNING - Element 17267755: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,725 - core.step_2.constituent_processor - WARNING - Element 19251204: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,726 - core.step_2.constituent_processor - WARNING - Element 17274610: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,726 - core.step_2.constituent_processor - WARNING - Element 19260199: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,726 - core.step_2.constituent_processor - WARNING - Element 17274626: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,727 - core.step_2.constituent_processor - WARNING - Element 19268829: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,727 - core.step_2.constituent_processor - WARNING - Element 17281427: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,727 - core.step_2.constituent_processor - WARNING - Element 19277528: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,727 - core.step_2.constituent_processor - WARNING - Element 17281442: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,727 - core.step_2.constituent_processor - WARNING - Element 19286768: Geen bekende materialen gevonden in constituent set
+2026-04-23 16:35:20,736 - core.step_2.performance_optimizer - INFO - Batch verwerking voltooid: 2819 geslaagd, 0 fouten
+2026-04-23 16:35:20,736 - core.step_2.step_2_material_collector - INFO - Totaal materiaalkoppelingen: 2819
+2026-04-23 16:35:20,743 - core.step_2.data_joiner - INFO - Start join: 3922 elementen + 2819 materiaalrijen
+2026-04-23 16:35:20,757 - core.step_2.data_joiner - INFO - Join voltooid: 3922 rijen
+2026-04-23 16:35:20,758 - core.step_2.data_joiner - INFO - Validatie: 0 elementen met materiaal, 3922 zonder
+2026-04-23 16:35:20,761 - core.step_2.data_enricher - INFO - Start data enrichment: 3922 rijen
+2026-04-23 16:35:20,772 - core.step_2.data_enricher - INFO - Data enrichment voltooid: 3922 rijen met extra data
+2026-04-23 16:35:20,774 - core.step_2.step_2_material_collector - INFO - Data enrichment stats: {'elements_with_thickness': np.int64(0), 'elements_with_width': np.int64(0), 'elements_with_height': np.int64(0), 'elements_with_length': np.int64(0), 'elements_with_coordinates': np.int64(0), 'elements_with_volume': np.int64(0), 'materials_with_density': np.int64(0), 'materials_with_thermal_conductivity': np.int64(0)}
+2026-04-23 16:35:20,783 - core.step_2.data_joiner - INFO - Sheet 'IfcWall': 1367 rijen
+2026-04-23 16:35:20,784 - core.step_2.data_joiner - INFO - Sheet 'IfcDoor': 108 rijen
+2026-04-23 16:35:20,786 - core.step_2.data_joiner - INFO - Sheet 'IfcWindow': 441 rijen
+2026-04-23 16:35:20,787 - core.step_2.data_joiner - INFO - Sheet 'IfcBeam': 37 rijen
+2026-04-23 16:35:20,788 - core.step_2.data_joiner - INFO - Sheet 'IfcSlab': 371 rijen
+2026-04-23 16:35:20,789 - core.step_2.data_joiner - INFO - Sheet 'IfcMember': 418 rijen
+2026-04-23 16:35:20,790 - core.step_2.data_joiner - INFO - Sheet 'IfcCurtainWall': 73 rijen
+2026-04-23 16:35:20,791 - core.step_2.data_joiner - INFO - Sheet 'IfcRoof': 24 rijen
+2026-04-23 16:35:20,799 - core.step_2.data_joiner - INFO - Sheet 'IfcBuildingElementProxy': 1001 rijen
+2026-04-23 16:35:20,800 - core.step_2.data_joiner - INFO - Sheet 'IfcCovering': 28 rijen
+2026-04-23 16:35:20,801 - core.step_2.data_joiner - INFO - Sheet 'IfcDuctSegment': 12 rijen
+2026-04-23 16:35:20,802 - core.step_2.data_joiner - INFO - Sheet 'IfcPipeSegment': 36 rijen
+2026-04-23 16:35:20,803 - core.step_2.data_joiner - INFO - Sheet 'IfcRailing': 6 rijen
+2026-04-23 16:35:21,365 - core.step_2.excel_exporter - INFO - Sheet 'Wall' geschreven: 1367 rijen
+2026-04-23 16:35:21,383 - core.step_2.excel_exporter - INFO - Sheet 'Door' geschreven: 108 rijen
+2026-04-23 16:35:21,468 - core.step_2.excel_exporter - INFO - Sheet 'Window' geschreven: 441 rijen
+2026-04-23 16:35:21,475 - core.step_2.excel_exporter - INFO - Sheet 'Beam' geschreven: 37 rijen
+2026-04-23 16:35:21,536 - core.step_2.excel_exporter - INFO - Sheet 'Slab' geschreven: 371 rijen
+2026-04-23 16:35:21,604 - core.step_2.excel_exporter - INFO - Sheet 'Member' geschreven: 418 rijen
+2026-04-23 16:35:21,619 - core.step_2.excel_exporter - INFO - Sheet 'CurtainWall' geschreven: 73 rijen
+2026-04-23 16:35:21,624 - core.step_2.excel_exporter - INFO - Sheet 'Roof' geschreven: 24 rijen
+2026-04-23 16:35:21,775 - core.step_2.excel_exporter - INFO - Sheet 'BuildingElementProxy' geschreven: 1001 rijen
+2026-04-23 16:35:21,782 - core.step_2.excel_exporter - INFO - Sheet 'Covering' geschreven: 28 rijen
+2026-04-23 16:35:21,785 - core.step_2.excel_exporter - INFO - Sheet 'DuctSegment' geschreven: 12 rijen
+2026-04-23 16:35:21,792 - core.step_2.excel_exporter - INFO - Sheet 'PipeSegment' geschreven: 36 rijen
+2026-04-23 16:35:21,795 - core.step_2.excel_exporter - INFO - Sheet 'Railing' geschreven: 6 rijen
+2026-04-23 16:35:21,797 - core.step_2.excel_exporter - INFO - Summary sheet geschreven
+2026-04-23 16:35:22,836 - core.step_2.excel_exporter - INFO - Excel bestand succesvol opgeslagen: C:\Users\cathy\Downloads\quest\output\step_2_materials_enriched.xlsx
+2026-04-23 16:35:22,836 - core.step_2.step_2_material_collector - INFO - Excel export succesvol: 13 sheets
+2026-04-23 16:35:22,864 - core.step_3.step_3_material_type_resolver - INFO - Materialen geladen: 3922 rijen
+2026-04-23 16:35:23,358 - core.step_3.step_3_material_type_resolver - INFO - DataFrame bijgewerkt met resolution info
+2026-04-23 16:35:24,655 - core.step_3.step_3_material_type_resolver - INFO - Excel geëxporteerd: C:\Users\cathy\Downloads\quest\output\step_3_materials_resolved.xlsx

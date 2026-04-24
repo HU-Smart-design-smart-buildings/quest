@@ -116,19 +116,15 @@ Stap 0 — Bestand inlezen en versie herkennen Open het IFC-bestand en lees auto
 
 Stap 1 — Alle bouwkundige elementen verzamelen Haal alle fysieke bouwonderdelen op uit het bestand, zoals wanden, vloeren, kolommen en balken. Sla per onderdeel de unieke identificatie, de naam en het type op. 
 
-Stap 2 — Materiaalkoppelingen ophalen Zoek per bouwonderdeel alle gekoppelde materiaalinformatie op via de relaties die in het bestand zijn vastgelegd. 
+Stap 2 - Materiaal eigenschappen ophalen Zoek per bouwkundig element alle gekoppelde materiaalinformatie op, denk aan de IFCQUANTITYVOLUME, lengte, breedte en hoogte. Wanneer een bouwkundig element een gelaagde opbouw van verschillende diktes en verschillende materialen bevat, moet deze onderscheiden worden en per laag de juiste materiaalinformatie aan toegevoegd worden.
 
-Stap 3 — Materiaaltype verwerken Bepaal per koppeling welk type materiaalinformatie aanwezig is en verwerk elk type op de juiste manier. Denk aan enkelvoudige materialen, lijsten van materialen, gelaagde opbouw met diktes, profielgebonden materialen en samengestelde materialen met fracties. Zorg dat onbekende typen worden gelogd zonder dat de applicatie crasht. 
+Stap 3 - Fallback wanneer er geen materiaalinformatie aanwezig is. Eerste keus is IFCOPENSHELL.GEOM gebruiken; gebruik de 3D mesh voor het ophalen van de afmetingen. Als laatste optie gebruik je de coördinaten van het bouwkundig element; hier bereken je de afmetingen door het gebruik van de begin en eindpunten van de coördinaten.
 
-Stap 4 — Versieverschillen correct afhandelen Pas de verwerking aan op basis van de bestandsversie die in stap 0 is uitgelezen. Sommige materiaaltypen bestaan alleen in nieuwere versies en andere zijn anders genest in oudere versies. Gebruik geen foutafhandeling als vervanging voor versiekennis. 
+Stap 4 — Hoeveelheden berekenen Lees per bouwonderdeel de aanwezige hoeveelheden uit en bereken de volumes en oppervlakken. Sla alleen waarden op die daadwerkelijk aanwezig zijn in het bestand. Gebruik nooit een standaardwaarde als vervanging voor ontbrekende data, sla dit op als leeg. 
 
-Stap 5 — Hoeveelheden uitlezen Lees per bouwonderdeel de aanwezige hoeveelheden uit zoals volumes en oppervlakken. Sla alleen waarden op die daadwerkelijk aanwezig zijn in het bestand. Gebruik nooit een standaardwaarde als vervanging voor ontbrekende data, sla dit op als leeg. 
+Stap 5 — Materiaallijst samenvoegen en aggregeren Groepeer alle gevonden materialen op naam en type. Tel de hoeveelheden per groep op en bewaar hoeveel elementen per combinatie aanwezig zijn. Zorg dat elk element herleidbaar blijft via zijn unieke identificatie. 
 
-Stap 6 — Aanvullende eigenschappen ophalen Haal per bouwonderdeel aanvullende eigenschappen op zoals dichtheid en andere materiaalgerelateerde kenmerken. Vul nooit een standaardwaarde in als een eigenschap ontbreekt. 
-
-Stap 7 — Materiaallijst samenvoegen en aggregeren Groepeer alle gevonden materialen op naam en type. Tel de hoeveelheden per groep op en bewaar hoeveel elementen per combinatie aanwezig zijn. Zorg dat elk element herleidbaar blijft via zijn unieke identificatie. 
-
-Stap 8 — Exporteren Exporteer de resultaten naar Excel met de volgende indeling: een overzichtstabblad met totaalvolumes per materiaalcategorie, een detailtabblad met één regel per element inclusief unieke identificatie voor kwaliteitscontrole, een tabblad voor niet-herkende materialen, en een tabblad met de volledigheidsrapportage. Voeg altijd een kolom toe met de bestandsversie zodat de herkomst traceerbaar blijft.  
+Stap 6 — Exporteren Exporteer de resultaten naar Excel met de volgende indeling: een overzichtstabblad met totaalvolumes per materiaalcategorie, een detailtabblad met één regel per element inclusief unieke identificatie voor kwaliteitscontrole, een tabblad voor niet-herkende materialen, en een tabblad met de volledigheidsrapportage. Voeg altijd een kolom toe met de bestandsversie zodat de herkomst traceerbaar blijft.  
 
 
 Hieronder staan IFC-entiteiten gebruik deze voor het uitvoeren van de stappen maar gebruik niet alleen deze entiteiten doe zelf ook nog onderzoek naar entiteiten die iets kunnen toevoegen. 

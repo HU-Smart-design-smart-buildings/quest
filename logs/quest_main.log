@@ -252,3 +252,7 @@
 2026-04-23 13:51:38,805 - __main__ - ERROR - Kon IFC-bestand niet inladen. Stoppen.
 2026-04-23 13:51:39,712 - __main__ - ERROR - Kon IFC-bestand niet inladen. Stoppen.
 2026-04-23 15:30:15,476 - __main__ - ERROR - Kritieke fout: 'total_material_types'
+2026-04-23 16:35:24,659 - __main__ - ERROR - Kritieke fout: 'total_material_types'
+2026-04-23 16:42:42,713 - __main__ - ERROR - Kritieke fout: ('type_naam', 'parent_element_id', 'type_link')
+2026-04-24 10:57:05,067 - __main__ - ERROR - Kritieke fout: 'total_material_entries'
+2026-04-24 11:20:14,448 - __main__ - ERROR - Kritieke fout: 'total_material_entries'
